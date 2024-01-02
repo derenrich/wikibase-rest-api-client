@@ -10,6 +10,8 @@ readme = "README.md"
 packages = [{ include = "wikibase_rest_api_client" }]
 include = ["CHANGELOG.md", "wikibase_rest_api_client/py.typed"]
 
+classifiers = ["Topic :: Internet :: WWW/HTTP :: Dynamic Content :: Wiki"]
+
 [tool.poetry.dependencies]
 python = "^3.8"
 httpx = ">=0.20.0,<0.27.0"
