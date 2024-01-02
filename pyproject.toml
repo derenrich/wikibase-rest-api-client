@@ -1,0 +1,28 @@
+[tool.poetry]
+name = "wikibase-rest-api-client"
+version = "0.1"
+description = "A client library for accessing the Wikibase REST API"
+
+authors = ["Daniel Erenrich <daniel@erenrich.net>"]
+license = "MIT"
+
+readme = "README.md"
+packages = [{ include = "wikibase_rest_api_client" }]
+include = ["CHANGELOG.md", "wikibase_rest_api_client/py.typed"]
+
+[tool.poetry.dependencies]
+python = "^3.8"
+httpx = ">=0.20.0,<0.27.0"
+attrs = ">=21.3.0"
+python-dateutil = "^2.8.0"
+
+[tool.poetry.group.dev.dependencies]
+ruff = "^0.1.9"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.ruff]
+select = ["F", "I"]
+line-length = 120
