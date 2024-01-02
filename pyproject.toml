@@ -11,6 +11,13 @@ packages = [{ include = "wikibase_rest_api_client" }]
 include = ["CHANGELOG.md", "wikibase_rest_api_client/py.typed"]
 
 classifiers = ["Topic :: Internet :: WWW/HTTP :: Dynamic Content :: Wiki"]
+keywords = ["wikibase", "wikidata", "rest-api", "client"]
+
+[tool.poetry.urls]
+Homepage = "https://github.com/derenrich/wikibase-rest-api-client"
+Repository = "https://github.com/derenrich/wikibase-rest-api-client.git"
+Issues = "https://github.com/derenrich/wikibase-rest-api-client/issues"
+
 
 [tool.poetry.dependencies]
 python = "^3.8"
