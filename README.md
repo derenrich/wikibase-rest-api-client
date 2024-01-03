@@ -38,7 +38,7 @@ from wikibase_rest_api_client.types import Response
 
 with client as client:
     # it's detailed because it responds with need more info than just the Item (e.g. status_code / headers)
-    response: Response[Item] = get_item.sync_detailed(client=client)
+    response: Response[Item] = get_item.sync_detailed('Q5', client=client)
 ```
 
 Or do the same thing with an async version:
@@ -49,7 +49,7 @@ from wikibase_rest_api_client.api.items import get_item
 from wikibase_rest_api_client.types import Response
 
 async with client as client:
-    response: Response[Item] = await get_item.asyncio_detailed(client=client)
+    response: Response[Item] = await get_item.asyncio_detailed('Q5', client=client)
 ```
 
 By default, when you're calling an HTTPS API it will attempt to verify that SSL is working correctly. Using certificate verification is highly recommended most of the time, but sometimes you may need to authenticate to a server (especially an internal server) using a custom certificate bundle.

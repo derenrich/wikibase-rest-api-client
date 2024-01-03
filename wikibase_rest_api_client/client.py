@@ -39,13 +39,11 @@ class Client:
     _cookies: Dict[str, str] = field(factory=dict, kw_only=True)
     _headers: Dict[str, str] = field(factory=dict, kw_only=True)
     _timeout: Optional[httpx.Timeout] = field(default=None, kw_only=True)
-    _verify_ssl: Union[str, bool, ssl.SSLContext] = field(
-        default=True, kw_only=True)
+    _verify_ssl: Union[str, bool, ssl.SSLContext] = field(default=True, kw_only=True)
     _follow_redirects: bool = field(default=False, kw_only=True)
     _httpx_args: Dict[str, Any] = field(factory=dict, kw_only=True)
     _client: Optional[httpx.Client] = field(default=None, init=False)
-    _async_client: Optional[httpx.AsyncClient] = field(
-        default=None, init=False)
+    _async_client: Optional[httpx.AsyncClient] = field(default=None, init=False)
 
     def with_headers(self, headers: Dict[str, str]) -> "Client":
         """Get a new client matching this one with additional headers"""
@@ -172,13 +170,11 @@ class AuthenticatedClient:
     _cookies: Dict[str, str] = field(factory=dict, kw_only=True)
     _headers: Dict[str, str] = field(factory=dict, kw_only=True)
     _timeout: Optional[httpx.Timeout] = field(default=None, kw_only=True)
-    _verify_ssl: Union[str, bool, ssl.SSLContext] = field(
-        default=True, kw_only=True)
+    _verify_ssl: Union[str, bool, ssl.SSLContext] = field(default=True, kw_only=True)
     _follow_redirects: bool = field(default=False, kw_only=True)
     _httpx_args: Dict[str, Any] = field(factory=dict, kw_only=True)
     _client: Optional[httpx.Client] = field(default=None, init=False)
-    _async_client: Optional[httpx.AsyncClient] = field(
-        default=None, init=False)
+    _async_client: Optional[httpx.AsyncClient] = field(default=None, init=False)
 
     prefix: str = "Bearer"
     auth_header_name: str = "Authorization"
