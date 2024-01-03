@@ -39,8 +39,7 @@ def _get_kwargs(
 
     params["_fields"] = json_field_fields
 
-    params = {k: v for k, v in params.items(
-    ) if v is not UNSET and v is not None}
+    params = {k: v for k, v in params.items() if v is not UNSET and v is not None}
 
     _kwargs: Dict[str, Any] = {
         "method": "get",

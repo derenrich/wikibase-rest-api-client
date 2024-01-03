@@ -33,8 +33,7 @@ def test_get_item():
 def test_get_property():
     client = Client(headers={"User-Agent": "wikibase-rest-api-client/1.0.0"})
     with client as client:
-        response: Response[Any] = get_property.sync_detailed(
-            "P31", client=client)
+        response: Response[Any] = get_property.sync_detailed("P31", client=client)
         assert type(response) == Response
         assert response.status_code == 200
         assert response.parsed is not None
@@ -52,8 +51,7 @@ def test_get_property():
 def test_get_property_label():
     client = Client(headers={"User-Agent": "wikibase-rest-api-client/1.0.0"})
     with client as client:
-        response: Response[Any] = get_property_label.sync_detailed(
-            "P31", "en", client=client)
+        response: Response[Any] = get_property_label.sync_detailed("P31", "en", client=client)
         assert type(response) == Response
         assert response.status_code == 200
         assert response.parsed is not None
@@ -65,8 +63,7 @@ def test_get_property_label():
 def test_get_item_label():
     client = Client(headers={"User-Agent": "wikibase-rest-api-client/1.0.0"})
     with client as client:
-        response: Response[Any] = get_item_label.sync_detailed(
-            "Q5", "en", client=client)
+        response: Response[Any] = get_item_label.sync_detailed("Q5", "en", client=client)
         assert type(response) == Response
         assert response.status_code == 200
         assert response.parsed is not None
@@ -78,24 +75,22 @@ def test_get_item_label():
 def test_get_item_description():
     client = Client(headers={"User-Agent": "wikibase-rest-api-client/1.0.0"})
     with client as client:
-        response: Response[Any] = get_item_description.sync_detailed(
-            "Q5", "en", client=client)
+        response: Response[Any] = get_item_description.sync_detailed("Q5", "en", client=client)
         assert type(response) == Response
         assert response.status_code == 200
         assert response.parsed is not None
         assert type(response.parsed) == str
         parsed = response.parsed
-        assert 'Homo sapiens' in parsed
+        assert "Homo sapiens" in parsed
 
 
 def test_get_property_description():
     client = Client(headers={"User-Agent": "wikibase-rest-api-client/1.0.0"})
     with client as client:
-        response: Response[Any] = get_property_description.sync_detailed(
-            "P31", "en", client=client)
+        response: Response[Any] = get_property_description.sync_detailed("P31", "en", client=client)
         assert type(response) == Response
         assert response.status_code == 200
         assert response.parsed is not None
         assert type(response.parsed) == str
         parsed = response.parsed
-        assert 'class' in parsed
+        assert "class" in parsed
