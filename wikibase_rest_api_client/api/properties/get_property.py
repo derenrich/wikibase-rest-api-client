@@ -2,6 +2,7 @@ from http import HTTPStatus
 from typing import Any, Dict, List, Optional, Union
 
 import httpx
+
 from wikibase_rest_api_client.models.property_ import Property
 
 from ... import errors
