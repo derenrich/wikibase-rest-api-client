@@ -40,7 +40,7 @@ def _get_kwargs(
 
 def _parse_response(*, client: Union[AuthenticatedClient, Client], response: httpx.Response) -> Optional[Any]:
     if response.status_code == HTTPStatus.OK:
-        return None
+        return response.json()
     if response.status_code == HTTPStatus.NOT_MODIFIED:
         return None
     if response.status_code == HTTPStatus.PERMANENT_REDIRECT:

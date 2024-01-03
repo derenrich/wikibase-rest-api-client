@@ -2,6 +2,7 @@ from http import HTTPStatus
 from typing import Any, Dict, List, Optional, Union
 
 import httpx
+from wikibase_rest_api_client.models.property_ import Property
 
 from ... import errors
 from ...client import AuthenticatedClient, Client
@@ -38,7 +39,8 @@ def _get_kwargs(
 
     params["_fields"] = json_field_fields
 
-    params = {k: v for k, v in params.items() if v is not UNSET and v is not None}
+    params = {k: v for k, v in params.items(
+    ) if v is not UNSET and v is not None}
 
     _kwargs: Dict[str, Any] = {
         "method": "get",
@@ -54,7 +56,7 @@ def _get_kwargs(
 
 def _parse_response(*, client: Union[AuthenticatedClient, Client], response: httpx.Response) -> Optional[Any]:
     if response.status_code == HTTPStatus.OK:
-        return None
+        return Property.from_dict(response.json())
     if response.status_code == HTTPStatus.BAD_REQUEST:
         return None
     if response.status_code == HTTPStatus.NOT_FOUND:
