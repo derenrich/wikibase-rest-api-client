@@ -6,8 +6,8 @@ from attrs import field as _attrs_field
 from ..types import UNSET, Unset
 
 if TYPE_CHECKING:
-    from ..models.qualifier_property import QualifierProperty
-    from ..models.qualifier_value import QualifierValue
+    from .property_info import PropertyInfo
+    from .value import Value
 
 
 T = TypeVar("T", bound="Qualifier")
@@ -17,12 +17,12 @@ T = TypeVar("T", bound="Qualifier")
 class Qualifier:
     """
     Attributes:
-        property_ (Union[Unset, QualifierProperty]):
-        value (Union[Unset, QualifierValue]):
+        property_ (Union[Unset, PropertyInfo]):
+        value (Union[Unset, Value]):
     """
 
-    property_: Union[Unset, "QualifierProperty"] = UNSET
-    value: Union[Unset, "QualifierValue"] = UNSET
+    property_: Union[Unset, "PropertyInfo"] = UNSET
+    value: Union[Unset, "Value"] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
@@ -46,23 +46,23 @@ class Qualifier:
 
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
-        from ..models.qualifier_property import QualifierProperty
-        from ..models.qualifier_value import QualifierValue
+        from .property_info import PropertyInfo
+        from .value import Value
 
         d = src_dict.copy()
         _property_ = d.pop("property", UNSET)
-        property_: Union[Unset, QualifierProperty]
+        property_: Union[Unset, PropertyInfo]
         if isinstance(_property_, Unset):
             property_ = UNSET
         else:
-            property_ = QualifierProperty.from_dict(_property_)
+            property_ = PropertyInfo.from_dict(_property_)
 
         _value = d.pop("value", UNSET)
-        value: Union[Unset, QualifierValue]
+        value: Union[Unset, Value]
         if isinstance(_value, Unset):
             value = UNSET
         else:
-            value = QualifierValue.from_dict(_value)
+            value = Value.from_dict(_value)
 
         qualifier = cls(
             property_=property_,

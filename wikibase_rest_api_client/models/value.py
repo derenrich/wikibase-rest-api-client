@@ -3,22 +3,22 @@ from typing import Any, Dict, List, Type, TypeVar, Union
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
 
-from ..models.qualifier_value_type import QualifierValueType
 from ..types import UNSET, Unset
+from .value_type import ValueType
 
-T = TypeVar("T", bound="QualifierValue")
+T = TypeVar("T", bound="Value")
 
 
 @_attrs_define
-class QualifierValue:
+class Value:
     """
     Attributes:
         content (Union[Unset, Any]): The value, if type == "value", otherwise omitted Example: I am a goat.
-        type (Union[Unset, QualifierValueType]): The value type
+        type (Union[Unset, ValueType]): The value type
     """
 
     content: Union[Unset, Any] = UNSET
-    type: Union[Unset, QualifierValueType] = UNSET
+    type: Union[Unset, ValueType] = UNSET
     additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
@@ -44,11 +44,11 @@ class QualifierValue:
         content = d.pop("content", UNSET)
 
         _type = d.pop("type", UNSET)
-        type: Union[Unset, QualifierValueType]
+        type: Union[Unset, ValueType]
         if isinstance(_type, Unset):
             type = UNSET
         else:
-            type = QualifierValueType(_type)
+            type = ValueType(_type)
 
         qualifier_value = cls(
             content=content,

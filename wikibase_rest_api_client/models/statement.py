@@ -8,9 +8,9 @@ from ..types import UNSET, Unset
 
 if TYPE_CHECKING:
     from ..models.qualifier import Qualifier
-    from ..models.qualifier_property import QualifierProperty
-    from ..models.qualifier_value import QualifierValue
     from ..models.reference import Reference
+    from .property_info import PropertyInfo
+    from .value import Value
 
 
 T = TypeVar("T", bound="Statement")
@@ -20,8 +20,8 @@ T = TypeVar("T", bound="Statement")
 class Statement:
     """
     Attributes:
-        property_ (Union[Unset, QualifierProperty]):
-        value (Union[Unset, QualifierValue]):
+        property_ (Union[Unset, PropertyInfo]):
+        value (Union[Unset, Value]):
         id (Union[Unset, str]): The globally unique identifier for this Statement Example:
             Q11$6403c562-401a-2b26-85cc-8327801145e1.
         rank (Union[Unset, StatementRank]): The rank of the Statement Default: StatementRank.NORMAL.
@@ -29,8 +29,8 @@ class Statement:
         references (Union[Unset, List['Reference']]):
     """
 
-    property_: Union[Unset, "QualifierProperty"] = UNSET
-    value: Union[Unset, "QualifierValue"] = UNSET
+    property_: Union[Unset, "PropertyInfo"] = UNSET
+    value: Union[Unset, "Value"] = UNSET
     id: Union[Unset, str] = UNSET
     rank: Union[Unset, StatementRank] = StatementRank.NORMAL
     qualifiers: Union[Unset, List["Qualifier"]] = UNSET
@@ -87,24 +87,24 @@ class Statement:
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
         from ..models.qualifier import Qualifier
-        from ..models.qualifier_property import QualifierProperty
-        from ..models.qualifier_value import QualifierValue
         from ..models.reference import Reference
+        from .property_info import PropertyInfo
+        from .value import Value
 
         d = src_dict.copy()
         _property_ = d.pop("property", UNSET)
-        property_: Union[Unset, QualifierProperty]
+        property_: Union[Unset, PropertyInfo]
         if isinstance(_property_, Unset):
             property_ = UNSET
         else:
-            property_ = QualifierProperty.from_dict(_property_)
+            property_ = PropertyInfo.from_dict(_property_)
 
         _value = d.pop("value", UNSET)
-        value: Union[Unset, QualifierValue]
+        value: Union[Unset, Value]
         if isinstance(_value, Unset):
             value = UNSET
         else:
-            value = QualifierValue.from_dict(_value)
+            value = Value.from_dict(_value)
 
         id = d.pop("id", UNSET)
 

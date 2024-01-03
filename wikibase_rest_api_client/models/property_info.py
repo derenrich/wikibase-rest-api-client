@@ -5,11 +5,11 @@ from attrs import field as _attrs_field
 
 from ..types import UNSET, Unset
 
-T = TypeVar("T", bound="QualifierProperty")
+T = TypeVar("T", bound="PropertyInfo")
 
 
 @_attrs_define
-class QualifierProperty:
+class PropertyInfo:
     """
     Attributes:
         id (Union[Unset, str]): The ID of the Property Example: P92.
