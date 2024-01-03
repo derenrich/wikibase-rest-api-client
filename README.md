@@ -1,7 +1,11 @@
 # wikibase-rest-api-client
-A client library for accessing Wikibase REST API generated automatically from the OpenAPI specification. See [the swagger UI](https://doc.wikimedia.org/Wikibase/master/js/rest-api/) for details of the API. Docs for the REST API can be at [doc.wikimedia.org](https://doc.wikimedia.org/Wikibase/master/php/repo_rest-api_README.html#autotoc_md670).
+A client library for accessing Wikibase REST API. See [the swagger UI](https://doc.wikimedia.org/Wikibase/master/js/rest-api/) for details of the API. Docs for the REST API can be found at [doc.wikimedia.org](https://doc.wikimedia.org/Wikibase/master/php/repo_rest-api_README.html#autotoc_md670).
+
+
 
 ## Usage
+See the tests for detailed examples of usage. For basic usage read on.
+
 First, create a client:
 
 ```python
