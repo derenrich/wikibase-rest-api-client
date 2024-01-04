@@ -41,8 +41,7 @@ def test_get_test_props(client):
 def test_delete_item_label(client):
     with client as client:
         # Delete the label
-        response = delete_item_label.sync_detailed(
-            TEST_ITEM, "en", client=client)
+        response = delete_item_label.sync_detailed(TEST_ITEM, "en", client=client)
 
         # Check the response
         assert type(response) == Response
