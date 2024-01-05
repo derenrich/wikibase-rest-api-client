@@ -70,7 +70,9 @@ def test_delete_item_label(client):
 def test_patch_item_label(client):
     with client as client:
         test_label = "Test label" + str(os.urandom(10))
-        patch = LabelsPatchRequest([PatchDocumentPatchItem(PatchDocumentPatchItemOp.ADD, "/en", test_label)])
+        patch = LabelsPatchRequest(
+            [PatchDocumentPatchItem(PatchDocumentPatchItemOp.ADD, "/en", test_label)], comment="do a test patch"
+        )
         print(patch.to_dict())
         response = patch_item_labels.sync_detailed(TEST_ITEM, patch, client=client)
         assert type(response) == Response
