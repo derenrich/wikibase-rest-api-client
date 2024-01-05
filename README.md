@@ -25,7 +25,7 @@ client = Client(headers={"User-Agent": "my-agent/1.0.0"})
 
 ```
 
-If the endpoints you're going to hit require authentication, use `AuthenticatedClient` instead:
+If the endpoints you're going to hit require authentication, use `AuthenticatedClient` instead. See [the OAuth docs](https://www.wikidata.org/wiki/Wikidata:REST_API/Authentication#Setting_up_OAuth_2.0) for how to get a token.
 
 ```python
 from wikibase_rest_api_client import AuthenticatedClient

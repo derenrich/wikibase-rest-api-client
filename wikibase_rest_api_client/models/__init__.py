@@ -13,6 +13,10 @@ from .item_sitelinks import ItemSitelinks
 from .item_statements import ItemStatements
 from .label_replace_request import LabelReplaceRequest
 from .labels import Labels
+from .labels_patch_request import LabelsPatchRequest
+from .patch_document import PatchDocument
+from .patch_document_patch_item import PatchDocumentPatchItem
+from .patch_document_patch_item_op import PatchDocumentPatchItemOp
 from .property_ import Property
 from .property_aliases import PropertyAliases
 from .property_descriptions import PropertyDescriptions
@@ -40,7 +44,11 @@ __all__ = (
     "ItemSitelinks",
     "ItemStatements",
     "Labels",
+    "LabelsPatchRequest",
     "LabelReplaceRequest",
+    "PatchDocument",
+    "PatchDocumentPatchItem",
+    "PatchDocumentPatchItemOp",
     "Property",
     "PropertyAliases",
     "PropertyDescriptions",

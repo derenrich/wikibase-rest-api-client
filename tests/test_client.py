@@ -85,6 +85,7 @@ def test_get_item_labels(client):
         assert response.status_code == 200
         assert response.parsed is not None
         assert "en" in response.parsed
+        assert "fr" in response.parsed
         response.parsed["en"] == "human"
 
 

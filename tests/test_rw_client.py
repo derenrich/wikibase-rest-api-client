@@ -3,9 +3,14 @@ import os
 import pytest
 
 from wikibase_rest_api_client import AuthenticatedClient
-from wikibase_rest_api_client.api.labels import delete_item_label, replace_item_label
+from wikibase_rest_api_client.api.labels import delete_item_label, patch_item_labels, replace_item_label
 from wikibase_rest_api_client.api.properties import get_property
-from wikibase_rest_api_client.models import LabelReplaceRequest
+from wikibase_rest_api_client.models import (
+    LabelReplaceRequest,
+    LabelsPatchRequest,
+    PatchDocumentPatchItem,
+    PatchDocumentPatchItemOp,
+)
 from wikibase_rest_api_client.types import Response
 
 from .utils import assert_item_label
@@ -60,3 +65,15 @@ def test_delete_item_label(client):
         assert type(response) == Response
         assert response.status_code == 200
         assert response.content == b'"Label deleted"'
+
+
+def test_patch_item_label(client):
+    with client as client:
+        test_label = "Test label" + str(os.urandom(10))
+        patch = LabelsPatchRequest([PatchDocumentPatchItem(PatchDocumentPatchItemOp.ADD, "/en", test_label)])
+        print(patch.to_dict())
+        response = patch_item_labels.sync_detailed(TEST_ITEM, patch, client=client)
+        assert type(response) == Response
+        assert response.status_code == 200
+
+        assert_item_label(client, TEST_ITEM, "en", test_label)
