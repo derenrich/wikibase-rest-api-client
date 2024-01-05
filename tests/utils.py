@@ -1,6 +1,3 @@
-
-
-from wikibase_rest_api_client import Client
 from wikibase_rest_api_client.api.items import get_item
 
 

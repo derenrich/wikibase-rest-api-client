@@ -11,8 +11,8 @@ from .item_descriptions import ItemDescriptions
 from .item_labels import ItemLabels
 from .item_sitelinks import ItemSitelinks
 from .item_statements import ItemStatements
-from .labels import Labels
 from .label_replace_request import LabelReplaceRequest
+from .labels import Labels
 from .property_ import Property
 from .property_aliases import PropertyAliases
 from .property_descriptions import PropertyDescriptions

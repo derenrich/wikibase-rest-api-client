@@ -1,4 +1,4 @@
-from typing import TYPE_CHECKING, Any, Dict, List, Type, TypeVar, Union, cast
+from typing import Any, Dict, List, Type, TypeVar, Union, cast
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
@@ -22,11 +22,9 @@ class LabelReplaceRequest:
     tags: Union[Unset, List[str]] = UNSET
     bot: Union[Unset, bool] = False
     comment: Union[Unset, str] = UNSET
-    additional_properties: Dict[str, Any] = _attrs_field(
-        init=False, factory=dict)
+    additional_properties: Dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
-
         tags: Union[Unset, List[str]] = UNSET
         if not isinstance(self.tags, Unset):
             tags = self.tags
