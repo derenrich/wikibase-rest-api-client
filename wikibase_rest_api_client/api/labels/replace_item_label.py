@@ -6,11 +6,13 @@ import httpx
 from ... import errors
 from ...client import AuthenticatedClient, Client
 from ...types import UNSET, Response, Unset
+from ...models import LabelReplaceRequest
 
 
 def _get_kwargs(
     item_id: str,
     language_code: str,
+    replace_request: LabelReplaceRequest,
     *,
     if_modified_since: Union[Unset, str] = UNSET,
     if_unmodified_since: Union[Unset, str] = UNSET,
@@ -32,6 +34,7 @@ def _get_kwargs(
             item_id=item_id,
             language_code=language_code,
         ),
+        "json": replace_request.to_dict(),
     }
 
     _kwargs["headers"] = headers
@@ -75,6 +78,7 @@ def _build_response(*, client: Union[AuthenticatedClient, Client], response: htt
 def sync_detailed(
     item_id: str,
     language_code: str,
+    replace_request: LabelReplaceRequest,
     *,
     client: Union[AuthenticatedClient, Client],
     if_modified_since: Union[Unset, str] = UNSET,
@@ -101,6 +105,7 @@ def sync_detailed(
     kwargs = _get_kwargs(
         item_id=item_id,
         language_code=language_code,
+        replace_request=replace_request,
         if_modified_since=if_modified_since,
         if_unmodified_since=if_unmodified_since,
         authorization=authorization,
@@ -116,6 +121,7 @@ def sync_detailed(
 async def asyncio_detailed(
     item_id: str,
     language_code: str,
+    replace_request: LabelReplaceRequest,
     *,
     client: Union[AuthenticatedClient, Client],
     if_modified_since: Union[Unset, str] = UNSET,
@@ -142,6 +148,7 @@ async def asyncio_detailed(
     kwargs = _get_kwargs(
         item_id=item_id,
         language_code=language_code,
+        replace_request=replace_request,
         if_modified_since=if_modified_since,
         if_unmodified_since=if_unmodified_since,
         authorization=authorization,

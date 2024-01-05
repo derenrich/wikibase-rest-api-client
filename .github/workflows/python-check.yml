@@ -29,4 +29,6 @@ jobs:
       - name: Lint
         run: poetry run ruff check .
       - name: Run pytest check
+        env:
+          WIKIDATA_TEST_TOKEN: ${{ secrets.WIKIDATA_TEST_TOKEN }}
         run: poetry run pytest

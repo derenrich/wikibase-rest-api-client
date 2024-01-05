@@ -12,6 +12,7 @@ from .item_labels import ItemLabels
 from .item_sitelinks import ItemSitelinks
 from .item_statements import ItemStatements
 from .labels import Labels
+from .label_replace_request import LabelReplaceRequest
 from .property_ import Property
 from .property_aliases import PropertyAliases
 from .property_descriptions import PropertyDescriptions
@@ -39,6 +40,7 @@ __all__ = (
     "ItemSitelinks",
     "ItemStatements",
     "Labels",
+    "LabelReplaceRequest",
     "Property",
     "PropertyAliases",
     "PropertyDescriptions",
