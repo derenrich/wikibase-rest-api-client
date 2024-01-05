@@ -9,7 +9,7 @@ from wikibase_rest_api_client.api.aliases import (
 )
 from wikibase_rest_api_client.api.descriptions import get_item_description, get_property_description
 from wikibase_rest_api_client.api.items import get_item
-from wikibase_rest_api_client.api.labels import get_item_label, get_item_labels, get_property_label
+from wikibase_rest_api_client.api.labels import get_item_label, get_item_labels, get_property_label, get_property_labels
 from wikibase_rest_api_client.api.properties import get_property
 from wikibase_rest_api_client.models import Item, Property
 from wikibase_rest_api_client.types import Response
@@ -87,6 +87,17 @@ def test_get_item_labels(client):
         assert "en" in response.parsed
         assert "fr" in response.parsed
         response.parsed["en"] == "human"
+
+
+def test_get_property_labels(client):
+    with client as client:
+        response: Response[Any] = get_property_labels.sync_detailed("P31", client=client)
+        assert type(response) == Response
+        assert response.status_code == 200
+        assert response.parsed is not None
+        assert "en" in response.parsed
+        assert "fr" in response.parsed
+        response.parsed["en"] == "instance of"
 
 
 def test_get_item_description(client):

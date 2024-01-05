@@ -3,7 +3,13 @@ import os
 import pytest
 
 from wikibase_rest_api_client import AuthenticatedClient
-from wikibase_rest_api_client.api.labels import delete_item_label, patch_item_labels, replace_item_label
+from wikibase_rest_api_client.api.labels import (
+    delete_item_label,
+    delete_property_label,
+    patch_item_labels,
+    replace_item_label,
+    replace_property_label,
+)
 from wikibase_rest_api_client.api.properties import get_property
 from wikibase_rest_api_client.models import (
     LabelReplaceRequest,
@@ -13,11 +19,12 @@ from wikibase_rest_api_client.models import (
 )
 from wikibase_rest_api_client.types import Response
 
-from .utils import assert_item_label
+from .utils import assert_item_label, assert_property_label
 
 TEST_ITEM = "Q233445"
 TEST_STRING_PROP = "P95180"
-PROPS = [TEST_STRING_PROP]
+TEST_PROP = "P98080"
+PROPS = [TEST_STRING_PROP, TEST_PROP]
 
 IN_GITHUB_ACTIONS = os.getenv("GITHUB_ACTIONS") == "true"
 
@@ -79,3 +86,24 @@ def test_patch_item_label(client):
         assert response.status_code == 200
 
         assert_item_label(client, TEST_ITEM, "en", test_label)
+
+
+def test_delete_property_label(client):
+    with client as client:
+        # set the label
+        test_label = "Test label"
+        response = replace_property_label.sync_detailed(
+            TEST_PROP, "en", LabelReplaceRequest(test_label, comment="test label set"), client=client
+        )
+        assert response.status_code == 200 or response.status_code == 201
+        assert response.content == b'"' + test_label.encode() + b'"'
+
+        assert_property_label(client, TEST_PROP, "en", test_label)
+
+        # delete the label
+        response = delete_property_label.sync_detailed(TEST_PROP, "en", client=client)
+
+        # Check the response
+        assert type(response) == Response
+        assert response.status_code == 200
+        assert response.content == b'"Label deleted"'
