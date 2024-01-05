@@ -46,10 +46,12 @@ def test_get_test_props(client):
 def test_delete_item_label(client):
     with client as client:
         # set the label
-        response = replace_item_label.sync_detailed(TEST_ITEM, "en", LabelReplaceRequest("Test label"), client=client)
-        assert response.status_code == 200
+        test_label = "Test label"
+        response = replace_item_label.sync_detailed(TEST_ITEM, "en", LabelReplaceRequest(test_label), client=client)
+        assert response.status_code == 200 or response.status_code == 201
+        assert response.content == b'"' + test_label.encode() + b'"'
 
-        assert_item_label(client, TEST_ITEM, "en", "Test label")
+        assert_item_label(client, TEST_ITEM, "en", test_label)
 
         # delete the label
         response = delete_item_label.sync_detailed(TEST_ITEM, "en", client=client)
