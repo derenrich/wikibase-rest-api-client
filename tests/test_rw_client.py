@@ -26,8 +26,7 @@ def client():
             headers={"User-Agent": "wikibase-rest-api-client/1.0.0"},
         )
     else:
-        raise Exception(
-            "No wikidata test token found so cannot do write tests")
+        raise Exception("No wikidata test token found so cannot do write tests")
 
 
 # just confirm the item we are going to test with still exists
@@ -42,15 +41,13 @@ def test_get_test_props(client):
 def test_delete_item_label(client):
     with client as client:
         # set the label
-        response = replace_item_label.sync_detailed(
-            TEST_ITEM, "en", LabelReplaceRequest("Test label"), client=client)
+        response = replace_item_label.sync_detailed(TEST_ITEM, "en", LabelReplaceRequest("Test label"), client=client)
         assert response.status_code == 200
 
         assert_item_label(client, TEST_ITEM, "en", "Test label")
 
         # delete the label
-        response = delete_item_label.sync_detailed(
-            TEST_ITEM, "en", client=client)
+        response = delete_item_label.sync_detailed(TEST_ITEM, "en", client=client)
 
         # Check the response
         assert type(response) == Response
