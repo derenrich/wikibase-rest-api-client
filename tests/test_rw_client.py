@@ -4,6 +4,8 @@ import os
 import pytest
 
 from wikibase_rest_api_client.api.aliases import (
+    add_item_aliases_in_language,
+    add_property_aliases_in_language,
     patch_item_aliases,
     patch_property_aliases,
 )
@@ -24,6 +26,7 @@ from wikibase_rest_api_client.api.labels import (
 )
 from wikibase_rest_api_client.api.properties import get_property
 from wikibase_rest_api_client.models import (
+    AliasesAddRequest,
     DescriptionReplaceRequest,
     DescriptionsPatchRequest,
     LabelReplaceRequest,
@@ -202,6 +205,15 @@ def test_patch_item_aliases(client):
 
         assert_item_alias(client, TEST_ITEM, "en", test_alias)
 
+        test_alias = "Test alias " + str(os.urandom(10))
+        response = add_item_aliases_in_language.sync_detailed(
+            TEST_ITEM, "en", AliasesAddRequest([test_alias], comment="add alias 2"), client=client
+        )
+        assert type(response) == Response
+        assert response.status_code == 200
+
+        assert_item_alias(client, TEST_ITEM, "en", test_alias)
+
         # now blank the aliases
         patch = DescriptionsPatchRequest(
             [PatchDocumentPatchItem(PatchDocumentPatchItemOp.REMOVE, "/en", "")], comment="blank aliases"
@@ -219,6 +231,15 @@ def test_patch_property_aliases(client):
             [PatchDocumentPatchItem(PatchDocumentPatchItemOp.ADD, "/en/0", test_alias)], comment="add alias"
         )
         response = patch_property_aliases.sync_detailed(TEST_PROP, patch, client=client)
+        assert type(response) == Response
+        assert response.status_code == 200
+
+        assert_property_alias(client, TEST_PROP, "en", test_alias)
+
+        test_alias = "Test alias " + str(os.urandom(10))
+        response = add_property_aliases_in_language.sync_detailed(
+            TEST_PROP, "en", AliasesAddRequest([test_alias], comment="add alias 2"), client=client
+        )
         assert type(response) == Response
         assert response.status_code == 200
 

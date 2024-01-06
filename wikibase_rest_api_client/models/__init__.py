@@ -1,6 +1,7 @@
 """ Contains all the data models used in inputs/outputs """
 
 from .aliases import Aliases
+from .aliases_add_request import AliasesAddRequest
 from .aliases_patch_request import AliasesPatchRequest
 from .description_replace_request import DescriptionReplaceRequest
 from .descriptions import Descriptions
@@ -36,6 +37,7 @@ from .value_type import ValueType
 
 __all__ = (
     "Aliases",
+    "AliasesAddRequest",
     "AliasesPatchRequest",
     "DescriptionReplaceRequest",
     "Descriptions",
