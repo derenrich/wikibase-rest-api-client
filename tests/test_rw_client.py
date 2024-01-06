@@ -3,7 +3,6 @@ import os
 
 import pytest
 
-from wikibase_rest_api_client import AuthenticatedClient
 from wikibase_rest_api_client.api.aliases import (
     patch_item_aliases,
     patch_property_aliases,
@@ -52,20 +51,6 @@ IN_GITHUB_ACTIONS = os.getenv("GITHUB_ACTIONS") == "true"
 
 if IN_GITHUB_ACTIONS:
     pytest.skip("Skipping write tests in github actions", allow_module_level=True)
-
-
-@pytest.fixture
-def client():
-    token = os.environ.get("WIKIDATA_TEST_TOKEN")
-
-    if token:
-        return AuthenticatedClient(
-            base_url="https://test.wikidata.org/w/rest.php/wikibase/v0/",
-            token=token,
-            headers={"User-Agent": "wikibase-rest-api-client/1.0.0"},
-        )
-    else:
-        raise Exception("No wikidata test token found so cannot do write tests")
 
 
 # just confirm the item we are going to test with still exists
