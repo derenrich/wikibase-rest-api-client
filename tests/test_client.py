@@ -18,7 +18,15 @@ from wikibase_rest_api_client.api.descriptions import (
 from wikibase_rest_api_client.api.items import get_item
 from wikibase_rest_api_client.api.labels import get_item_label, get_item_labels, get_property_label, get_property_labels
 from wikibase_rest_api_client.api.properties import get_property
+from wikibase_rest_api_client.api.statements import (
+    get_item_statement,
+    get_item_statements,
+    get_property_statement,
+    get_property_statements,
+    get_statement,
+)
 from wikibase_rest_api_client.models import Item, Property
+from wikibase_rest_api_client.models.statement_rank import StatementRank
 from wikibase_rest_api_client.types import Response
 
 
@@ -198,3 +206,65 @@ def test_get_property_aliases(client):
         assert type(parsed["en"]) == list
         assert len(parsed["en"]) > 0
         assert all(isinstance(alias, str) for alias in parsed["en"])
+
+
+def test_get_statement(client):
+    with client as client:
+        response: Response[Any] = get_statement.sync_detailed("Q5$82b80d5f-4353-c7cb-1a3c-c0c8f4f5f237", client=client)
+        assert type(response) == Response
+        assert response.status_code == 200
+        assert response.parsed is not None
+        parsed = response.parsed
+        assert parsed.id == "Q5$82b80d5f-4353-c7cb-1a3c-c0c8f4f5f237"
+        assert parsed.rank == StatementRank.NORMAL
+        assert parsed.property_.id == "P31"
+
+
+def test_get_item_statement(client):
+    with client as client:
+        response: Response[Any] = get_item_statement.sync_detailed(
+            "Q5", "Q5$82b80d5f-4353-c7cb-1a3c-c0c8f4f5f237", client=client
+        )
+        assert type(response) == Response
+        assert response.status_code == 200
+        assert response.parsed is not None
+        parsed = response.parsed
+        assert parsed.id == "Q5$82b80d5f-4353-c7cb-1a3c-c0c8f4f5f237"
+        assert parsed.rank == StatementRank.NORMAL
+        assert parsed.property_.id == "P31"
+
+
+def test_get_property_statement(client):
+    with client as client:
+        response: Response[Any] = get_property_statement.sync_detailed(
+            "P31", "P31$9d042001-4a7e-2432-a7e1-233360062379", client=client
+        )
+        assert type(response) == Response
+        assert response.status_code == 200
+        assert response.parsed is not None
+        parsed = response.parsed
+        assert parsed.id == "P31$9d042001-4a7e-2432-a7e1-233360062379"
+        assert parsed.rank == StatementRank.NORMAL
+        assert parsed.property_.id == "P31"
+
+
+def test_get_item_statements(client):
+    with client as client:
+        response: Response[Any] = get_item_statements.sync_detailed("Q5", client=client)
+        assert type(response) == Response
+        assert response.status_code == 200
+        assert response.parsed is not None
+        parsed = response.parsed
+        assert "P31" in parsed
+        assert len(parsed["P31"]) > 0
+
+
+def test_get_property_statements(client):
+    with client as client:
+        response: Response[Any] = get_property_statements.sync_detailed("P31", client=client)
+        assert type(response) == Response
+        assert response.status_code == 200
+        assert response.parsed is not None
+        parsed = response.parsed
+        assert "P31" in parsed
+        assert len(parsed["P31"]) > 0
