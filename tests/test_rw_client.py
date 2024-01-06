@@ -1,9 +1,16 @@
+import json
 import os
 
 import pytest
 
 from wikibase_rest_api_client import AuthenticatedClient
-from wikibase_rest_api_client.api.descriptions import patch_item_descriptions, patch_property_descriptions
+from wikibase_rest_api_client.api.descriptions import (
+    delete_item_description,
+    patch_item_descriptions,
+    patch_property_descriptions,
+    replace_item_description,
+    replace_property_description,
+)
 from wikibase_rest_api_client.api.labels import (
     delete_item_label,
     delete_property_label,
@@ -14,6 +21,7 @@ from wikibase_rest_api_client.api.labels import (
 )
 from wikibase_rest_api_client.api.properties import get_property
 from wikibase_rest_api_client.models import (
+    DescriptionReplaceRequest,
     DescriptionsPatchRequest,
     LabelReplaceRequest,
     LabelsPatchRequest,
@@ -61,10 +69,10 @@ def test_get_test_props(client):
 def test_delete_item_label(client):
     with client as client:
         # set the label
-        test_label = "Test label"
+        test_label = "Test label " + str(os.urandom(10))
         response = replace_item_label.sync_detailed(TEST_ITEM, "en", LabelReplaceRequest(test_label), client=client)
         assert response.status_code == 200 or response.status_code == 201
-        assert response.content == b'"' + test_label.encode() + b'"'
+        assert response.content == json.dumps(test_label).encode()
 
         assert_item_label(client, TEST_ITEM, "en", test_label)
 
@@ -148,3 +156,38 @@ def test_patch_property_description(client):
         assert response.status_code == 200
 
         assert_property_description(client, TEST_PROP, "en", test_desc)
+
+
+def test_delete_item_description(client):
+    with client as client:
+        test_description = "Test description " + str(os.urandom(10))
+        response = replace_item_description.sync_detailed(
+            TEST_ITEM, "en", DescriptionReplaceRequest(test_description), client=client
+        )
+        assert response.status_code == 200 or response.status_code == 201
+        assert response.content == json.dumps(test_description).encode()
+        assert_item_description(client, TEST_ITEM, "en", test_description)
+
+        response = delete_item_description.sync_detailed(TEST_ITEM, "en", client=client)
+
+        # Check the response
+        assert type(response) == Response
+        assert response.status_code == 200
+        assert response.content == b'"Description deleted"'
+
+
+def test_delete_property_description(client):
+    with client as client:
+        test_description = "Test description " + str(os.urandom(10))
+        response = replace_property_description.sync_detailed(
+            TEST_PROP, "en", DescriptionReplaceRequest(test_description), client=client
+        )
+        assert response.status_code == 200 or response.status_code == 201
+        assert response.content == json.dumps(test_description).encode()
+        assert_property_description(client, TEST_PROP, "en", test_description)
+
+        # Not working yet? Marked as "in development" in the API docs
+        # response = delete_property_description.sync_detailed(TEST_PROP, "en", client=client)
+        # assert type(response) == Response
+        # assert response.status_code == 200
+        # assert response.content == b'"Description deleted"'

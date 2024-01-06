@@ -5,12 +5,14 @@ import httpx
 
 from ... import errors
 from ...client import AuthenticatedClient, Client
+from ...models import DescriptionReplaceRequest
 from ...types import UNSET, Response, Unset
 
 
 def _get_kwargs(
     property_id: str,
     language_code: str,
+    replace_request: DescriptionReplaceRequest,
     *,
     if_modified_since: Union[Unset, str] = UNSET,
     if_unmodified_since: Union[Unset, str] = UNSET,
@@ -32,6 +34,7 @@ def _get_kwargs(
             property_id=property_id,
             language_code=language_code,
         ),
+        "json": replace_request.to_dict(),
     }
 
     _kwargs["headers"] = headers
@@ -73,6 +76,7 @@ def _build_response(*, client: Union[AuthenticatedClient, Client], response: htt
 def sync_detailed(
     property_id: str,
     language_code: str,
+    replace_request: DescriptionReplaceRequest,
     *,
     client: Union[AuthenticatedClient, Client],
     if_modified_since: Union[Unset, str] = UNSET,
@@ -84,6 +88,7 @@ def sync_detailed(
     Args:
         property_id (str):
         language_code (str):
+        replace_request (DescriptionReplaceRequest):
         if_modified_since (Union[Unset, str]):
         if_unmodified_since (Union[Unset, str]):
         authorization (Union[Unset, str]):
@@ -99,6 +104,7 @@ def sync_detailed(
     kwargs = _get_kwargs(
         property_id=property_id,
         language_code=language_code,
+        replace_request=replace_request,
         if_modified_since=if_modified_since,
         if_unmodified_since=if_unmodified_since,
         authorization=authorization,
@@ -114,6 +120,7 @@ def sync_detailed(
 async def asyncio_detailed(
     property_id: str,
     language_code: str,
+    replace_request: DescriptionReplaceRequest,
     *,
     client: Union[AuthenticatedClient, Client],
     if_modified_since: Union[Unset, str] = UNSET,
@@ -125,6 +132,7 @@ async def asyncio_detailed(
     Args:
         property_id (str):
         language_code (str):
+        replace_request (DescriptionReplaceRequest):
         if_modified_since (Union[Unset, str]):
         if_unmodified_since (Union[Unset, str]):
         authorization (Union[Unset, str]):
@@ -140,6 +148,7 @@ async def asyncio_detailed(
     kwargs = _get_kwargs(
         property_id=property_id,
         language_code=language_code,
+        replace_request=replace_request,
         if_modified_since=if_modified_since,
         if_unmodified_since=if_unmodified_since,
         authorization=authorization,
