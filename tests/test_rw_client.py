@@ -3,6 +3,9 @@ import os
 import pytest
 
 from wikibase_rest_api_client import AuthenticatedClient
+from wikibase_rest_api_client.api.descriptions import (
+    patch_item_descriptions,
+)
 from wikibase_rest_api_client.api.labels import (
     delete_item_label,
     delete_property_label,
@@ -13,6 +16,7 @@ from wikibase_rest_api_client.api.labels import (
 )
 from wikibase_rest_api_client.api.properties import get_property
 from wikibase_rest_api_client.models import (
+    DescriptionsPatchRequest,
     LabelReplaceRequest,
     LabelsPatchRequest,
     PatchDocumentPatchItem,
@@ -20,7 +24,7 @@ from wikibase_rest_api_client.models import (
 )
 from wikibase_rest_api_client.types import Response
 
-from .utils import assert_item_label, assert_property_label
+from .utils import assert_item_description, assert_item_label, assert_property_label
 
 TEST_ITEM = "Q233445"
 TEST_STRING_PROP = "P95180"
@@ -81,7 +85,6 @@ def test_patch_item_label(client):
         patch = LabelsPatchRequest(
             [PatchDocumentPatchItem(PatchDocumentPatchItemOp.ADD, "/en", test_label)], comment="do a test patch"
         )
-        print(patch.to_dict())
         response = patch_item_labels.sync_detailed(TEST_ITEM, patch, client=client)
         assert type(response) == Response
         assert response.status_code == 200
@@ -116,9 +119,21 @@ def test_patch_property_label(client):
         patch = LabelsPatchRequest(
             [PatchDocumentPatchItem(PatchDocumentPatchItemOp.ADD, "/en", test_label)], comment="do a test patch"
         )
-        print(patch.to_dict())
         response = patch_property_labels.sync_detailed(TEST_PROP, patch, client=client)
         assert type(response) == Response
         assert response.status_code == 200
 
         assert_property_label(client, TEST_PROP, "en", test_label)
+
+
+def test_patch_item_description(client):
+    with client as client:
+        test_desc = "Test desc " + str(os.urandom(10))
+        patch = DescriptionsPatchRequest(
+            [PatchDocumentPatchItem(PatchDocumentPatchItemOp.ADD, "/en", test_desc)], comment="do a test patch"
+        )
+        response = patch_item_descriptions.sync_detailed(TEST_ITEM, patch, client=client)
+        assert type(response) == Response
+        assert response.status_code == 200
+
+        assert_item_description(client, TEST_ITEM, "en", test_desc)

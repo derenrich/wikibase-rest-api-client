@@ -2,6 +2,7 @@
 
 from .aliases import Aliases
 from .descriptions import Descriptions
+from .descriptions_patch_request import DescriptionsPatchRequest
 from .error import Error
 from .get_item_fields_item import GetItemFieldsItem
 from .get_property_fields_item import GetPropertyFieldsItem
@@ -34,6 +35,7 @@ from .value_type import ValueType
 __all__ = (
     "Aliases",
     "Descriptions",
+    "DescriptionsPatchRequest",
     "Error",
     "GetItemFieldsItem",
     "GetPropertyFieldsItem",
