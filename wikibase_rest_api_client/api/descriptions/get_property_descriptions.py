@@ -5,6 +5,7 @@ import httpx
 
 from ... import errors
 from ...client import AuthenticatedClient, Client
+from ...models import PropertyDescriptions
 from ...types import UNSET, Response, Unset
 
 
@@ -38,7 +39,7 @@ def _get_kwargs(
 
 def _parse_response(*, client: Union[AuthenticatedClient, Client], response: httpx.Response) -> Optional[Any]:
     if response.status_code == HTTPStatus.OK:
-        return None
+        return PropertyDescriptions.from_dict(response.json())
     if response.status_code == HTTPStatus.NOT_MODIFIED:
         return None
     if response.status_code == HTTPStatus.BAD_REQUEST:

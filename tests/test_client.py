@@ -7,7 +7,12 @@ from wikibase_rest_api_client.api.aliases import (
     get_item_aliases_in_language,
     get_property_aliases_in_language,
 )
-from wikibase_rest_api_client.api.descriptions import get_item_description, get_property_description
+from wikibase_rest_api_client.api.descriptions import (
+    get_item_description,
+    get_item_descriptions,
+    get_property_description,
+    get_property_descriptions,
+)
 from wikibase_rest_api_client.api.items import get_item
 from wikibase_rest_api_client.api.labels import get_item_label, get_item_labels, get_property_label, get_property_labels
 from wikibase_rest_api_client.api.properties import get_property
@@ -111,6 +116,17 @@ def test_get_item_description(client):
         assert "Homo sapiens" in parsed
 
 
+def test_get_item_descriptions(client):
+    with client as client:
+        response: Response[Any] = get_item_descriptions.sync_detailed("Q5", client=client)
+        assert type(response) == Response
+        assert response.status_code == 200
+        assert response.parsed is not None
+        parsed = response.parsed
+        assert "Homo sapiens" in parsed["en"]
+        assert "Homo sapiens" in parsed["fr"]
+
+
 def test_get_property_description(client):
     with client as client:
         response: Response[Any] = get_property_description.sync_detailed("P31", "en", client=client)
@@ -120,6 +136,17 @@ def test_get_property_description(client):
         assert type(response.parsed) == str
         parsed = response.parsed
         assert "class" in parsed
+
+
+def test_get_property_descriptions(client):
+    with client as client:
+        response: Response[Any] = get_property_descriptions.sync_detailed("P31", client=client)
+        assert type(response) == Response
+        assert response.status_code == 200
+        assert response.parsed is not None
+        parsed = response.parsed
+        assert "class" in parsed["en"]
+        assert "classe" in parsed["fr"]
 
 
 def test_get_item_aliases_in_language(client):

@@ -7,6 +7,7 @@ from wikibase_rest_api_client.api.labels import (
     delete_item_label,
     delete_property_label,
     patch_item_labels,
+    patch_property_labels,
     replace_item_label,
     replace_property_label,
 )
@@ -107,3 +108,17 @@ def test_delete_property_label(client):
         assert type(response) == Response
         assert response.status_code == 200
         assert response.content == b'"Label deleted"'
+
+
+def test_patch_property_label(client):
+    with client as client:
+        test_label = "Test label" + str(os.urandom(10))
+        patch = LabelsPatchRequest(
+            [PatchDocumentPatchItem(PatchDocumentPatchItemOp.ADD, "/en", test_label)], comment="do a test patch"
+        )
+        print(patch.to_dict())
+        response = patch_property_labels.sync_detailed(TEST_PROP, patch, client=client)
+        assert type(response) == Response
+        assert response.status_code == 200
+
+        assert_property_label(client, TEST_PROP, "en", test_label)
