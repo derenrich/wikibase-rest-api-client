@@ -4,7 +4,9 @@ import pytest
 
 from wikibase_rest_api_client import Client
 from wikibase_rest_api_client.api.aliases import (
+    get_item_aliases,
     get_item_aliases_in_language,
+    get_property_aliases,
     get_property_aliases_in_language,
 )
 from wikibase_rest_api_client.api.descriptions import (
@@ -161,6 +163,19 @@ def test_get_item_aliases_in_language(client):
         assert all(isinstance(alias, str) for alias in parsed)
 
 
+def test_get_item_aliases(client):
+    with client as client:
+        response: Response[Any] = get_item_aliases.sync_detailed("Q5", client=client)
+        assert type(response) == Response
+        assert response.status_code == 200
+        assert response.parsed is not None
+        parsed = response.parsed
+        assert type(parsed["en"]) == list
+        assert len(parsed.to_dict()) > 0
+        assert len(parsed["en"]) > 0
+        assert all(isinstance(alias, str) for alias in parsed["en"])
+
+
 def test_get_property_aliases_in_language(client):
     with client as client:
         response: Response[Any] = get_property_aliases_in_language.sync_detailed("P31", "en", client=client)
@@ -171,3 +186,15 @@ def test_get_property_aliases_in_language(client):
         parsed = response.parsed
         assert len(parsed) > 0
         assert all(isinstance(alias, str) for alias in parsed)
+
+
+def test_get_property_aliases(client):
+    with client as client:
+        response: Response[Any] = get_property_aliases.sync_detailed("P31", client=client)
+        assert type(response) == Response
+        assert response.status_code == 200
+        assert response.parsed is not None
+        parsed = response.parsed
+        assert type(parsed["en"]) == list
+        assert len(parsed["en"]) > 0
+        assert all(isinstance(alias, str) for alias in parsed["en"])
