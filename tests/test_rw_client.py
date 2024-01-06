@@ -4,6 +4,10 @@ import os
 import pytest
 
 from wikibase_rest_api_client import AuthenticatedClient
+from wikibase_rest_api_client.api.aliases import (
+    patch_item_aliases,
+    patch_property_aliases,
+)
 from wikibase_rest_api_client.api.descriptions import (
     delete_item_description,
     patch_item_descriptions,
@@ -30,7 +34,14 @@ from wikibase_rest_api_client.models import (
 )
 from wikibase_rest_api_client.types import Response
 
-from .utils import assert_item_description, assert_item_label, assert_property_description, assert_property_label
+from .utils import (
+    assert_item_alias,
+    assert_item_description,
+    assert_item_label,
+    assert_property_alias,
+    assert_property_description,
+    assert_property_label,
+)
 
 TEST_ITEM = "Q233445"
 TEST_STRING_PROP = "P95180"
@@ -191,3 +202,47 @@ def test_delete_property_description(client):
         # assert type(response) == Response
         # assert response.status_code == 200
         # assert response.content == b'"Description deleted"'
+
+
+def test_patch_item_aliases(client):
+    with client as client:
+        # set alias to some value
+        test_alias = "Test alias " + str(os.urandom(10))
+        patch = DescriptionsPatchRequest(
+            [PatchDocumentPatchItem(PatchDocumentPatchItemOp.ADD, "/en/0", test_alias)], comment="add alias"
+        )
+        response = patch_item_aliases.sync_detailed(TEST_ITEM, patch, client=client)
+        assert type(response) == Response
+        assert response.status_code == 200
+
+        assert_item_alias(client, TEST_ITEM, "en", test_alias)
+
+        # now blank the aliases
+        patch = DescriptionsPatchRequest(
+            [PatchDocumentPatchItem(PatchDocumentPatchItemOp.REMOVE, "/en", "")], comment="blank aliases"
+        )
+        response = patch_item_aliases.sync_detailed(TEST_ITEM, patch, client=client)
+        assert type(response) == Response
+        assert response.status_code == 200
+
+
+def test_patch_property_aliases(client):
+    with client as client:
+        # set alias to some value
+        test_alias = "Test alias " + str(os.urandom(10))
+        patch = DescriptionsPatchRequest(
+            [PatchDocumentPatchItem(PatchDocumentPatchItemOp.ADD, "/en/0", test_alias)], comment="add alias"
+        )
+        response = patch_property_aliases.sync_detailed(TEST_PROP, patch, client=client)
+        assert type(response) == Response
+        assert response.status_code == 200
+
+        assert_property_alias(client, TEST_PROP, "en", test_alias)
+
+        # now blank the aliases
+        patch = DescriptionsPatchRequest(
+            [PatchDocumentPatchItem(PatchDocumentPatchItemOp.REMOVE, "/en", "")], comment="blank aliases"
+        )
+        response = patch_property_aliases.sync_detailed(TEST_PROP, patch, client=client)
+        assert type(response) == Response
+        assert response.status_code == 200

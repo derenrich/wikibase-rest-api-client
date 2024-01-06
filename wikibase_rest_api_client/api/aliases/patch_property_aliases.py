@@ -5,11 +5,13 @@ import httpx
 
 from ... import errors
 from ...client import AuthenticatedClient, Client
+from ...models import AliasesPatchRequest
 from ...types import UNSET, Response, Unset
 
 
 def _get_kwargs(
     property_id: str,
+    patch: AliasesPatchRequest,
     *,
     if_unmodified_since: Union[Unset, str] = UNSET,
 ) -> Dict[str, Any]:
@@ -22,6 +24,7 @@ def _get_kwargs(
         "url": "/entities/properties/{property_id}/aliases".format(
             property_id=property_id,
         ),
+        "json": patch.to_dict(),
     }
 
     _kwargs["headers"] = headers
@@ -62,6 +65,7 @@ def _build_response(*, client: Union[AuthenticatedClient, Client], response: htt
 
 def sync_detailed(
     property_id: str,
+    patch: AliasesPatchRequest,
     *,
     client: Union[AuthenticatedClient, Client],
     if_unmodified_since: Union[Unset, str] = UNSET,
@@ -70,6 +74,7 @@ def sync_detailed(
 
     Args:
         property_id (str):
+        patch (AliasesPatchRequest):
         if_unmodified_since (Union[Unset, str]):
 
     Raises:
@@ -82,6 +87,7 @@ def sync_detailed(
 
     kwargs = _get_kwargs(
         property_id=property_id,
+        patch=patch,
         if_unmodified_since=if_unmodified_since,
     )
 
@@ -94,6 +100,7 @@ def sync_detailed(
 
 async def asyncio_detailed(
     property_id: str,
+    patch: AliasesPatchRequest,
     *,
     client: Union[AuthenticatedClient, Client],
     if_unmodified_since: Union[Unset, str] = UNSET,
@@ -102,6 +109,7 @@ async def asyncio_detailed(
 
     Args:
         property_id (str):
+        patch (AliasesPatchRequest):
         if_unmodified_since (Union[Unset, str]):
 
     Raises:
@@ -114,6 +122,7 @@ async def asyncio_detailed(
 
     kwargs = _get_kwargs(
         property_id=property_id,
+        patch=patch,
         if_unmodified_since=if_unmodified_since,
     )
 

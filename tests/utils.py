@@ -20,6 +20,15 @@ def assert_item_description(client, item: str, lang: str, target: str):
     assert response.parsed.descriptions[lang] == target
 
 
+def assert_item_alias(client, item: str, lang: str, target: str):
+    response = get_item.sync_detailed(item, client=client)
+    assert response.status_code == 200
+    assert response.parsed is not None
+    assert response.parsed.aliases is not None
+    assert lang in response.parsed.aliases
+    assert target in response.parsed.aliases[lang]
+
+
 def assert_property_label(client, prop: str, lang: str, target: str):
     response = get_property.sync_detailed(prop, client=client)
     assert response.status_code == 200
@@ -36,3 +45,12 @@ def assert_property_description(client, item: str, lang: str, target: str):
     assert response.parsed.descriptions is not None
     assert lang in response.parsed.descriptions
     assert response.parsed.descriptions[lang] == target
+
+
+def assert_property_alias(client, item: str, lang: str, target: str):
+    response = get_property.sync_detailed(item, client=client)
+    assert response.status_code == 200
+    assert response.parsed is not None
+    assert response.parsed.aliases is not None
+    assert lang in response.parsed.aliases
+    assert target in response.parsed.aliases[lang]
