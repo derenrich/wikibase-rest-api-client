@@ -194,6 +194,21 @@ def test_get_item_aliases_in_language(client):
         assert all(isinstance(alias, str) for alias in parsed)
 
 
+def test_get_item_aliases_in_language_error(client):
+    with client as client:
+        response: Response[Any] = get_item_aliases_in_language.sync_detailed("Q5", "zzt", client=client)
+        assert type(response) == Response
+        assert response.status_code == 400
+        assert response.parsed is not None
+        assert type(response.parsed) == Error
+
+        response: Response[Any] = get_item_aliases_in_language.sync_detailed("Q123456789", "en", client=client)
+        assert type(response) == Response
+        assert response.status_code == 404
+        assert response.parsed is not None
+        assert type(response.parsed) == Error
+
+
 def test_get_item_aliases(client):
     with client as client:
         response: Response[Any] = get_item_aliases.sync_detailed("Q5", client=client)
