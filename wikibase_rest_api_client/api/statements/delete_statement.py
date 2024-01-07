@@ -5,11 +5,13 @@ import httpx
 
 from ... import errors
 from ...client import AuthenticatedClient, Client
+from ...models import MediawikiEdit
 from ...types import UNSET, Response, Unset
 
 
 def _get_kwargs(
     statement_id: str,
+    edit: Union[Unset, MediawikiEdit] = UNSET,
     *,
     if_unmodified_since: Union[Unset, str] = UNSET,
 ) -> Dict[str, Any]:
@@ -22,6 +24,7 @@ def _get_kwargs(
         "url": "/statements/{statement_id}".format(
             statement_id=statement_id,
         ),
+        "json": edit.to_dict() if edit else None,
     }
 
     _kwargs["headers"] = headers
@@ -58,6 +61,7 @@ def _build_response(*, client: Union[AuthenticatedClient, Client], response: htt
 
 def sync_detailed(
     statement_id: str,
+    edit: Union[Unset, MediawikiEdit] = UNSET,
     *,
     client: Union[AuthenticatedClient, Client],
     if_unmodified_since: Union[Unset, str] = UNSET,
@@ -81,6 +85,7 @@ def sync_detailed(
 
     kwargs = _get_kwargs(
         statement_id=statement_id,
+        edit=edit,
         if_unmodified_since=if_unmodified_since,
     )
 
@@ -93,6 +98,7 @@ def sync_detailed(
 
 async def asyncio_detailed(
     statement_id: str,
+    edit: Union[Unset, MediawikiEdit] = UNSET,
     *,
     client: Union[AuthenticatedClient, Client],
     if_unmodified_since: Union[Unset, str] = UNSET,
@@ -116,6 +122,7 @@ async def asyncio_detailed(
 
     kwargs = _get_kwargs(
         statement_id=statement_id,
+        edit=edit,
         if_unmodified_since=if_unmodified_since,
     )
 

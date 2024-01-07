@@ -18,6 +18,7 @@ from .item_statements import ItemStatements
 from .label_replace_request import LabelReplaceRequest
 from .labels import Labels
 from .labels_patch_request import LabelsPatchRequest
+from .mediawiki_edit import MediawikiEdit
 from .patch_document import PatchDocument
 from .patch_document_patch_item import PatchDocumentPatchItem
 from .patch_document_patch_item_op import PatchDocumentPatchItemOp
@@ -32,6 +33,7 @@ from .reference import Reference
 from .sitelink import Sitelink
 from .statement import Statement
 from .statement_rank import StatementRank
+from .statement_request import StatementRequest
 from .value import Value
 from .value_type import ValueType
 
@@ -54,6 +56,7 @@ __all__ = (
     "Labels",
     "LabelsPatchRequest",
     "LabelReplaceRequest",
+    "MediawikiEdit",
     "PatchDocument",
     "PatchDocumentPatchItem",
     "PatchDocumentPatchItemOp",
@@ -70,4 +73,5 @@ __all__ = (
     "Sitelink",
     "Statement",
     "StatementRank",
+    "StatementRequest",
 )
