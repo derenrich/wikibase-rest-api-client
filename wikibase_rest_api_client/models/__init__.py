@@ -32,6 +32,7 @@ from .qualifier import Qualifier
 from .reference import Reference
 from .sitelink import Sitelink
 from .statement import Statement
+from .statement_patch_request import StatementPatchRequest
 from .statement_rank import StatementRank
 from .statement_request import StatementRequest
 from .value import Value
@@ -72,6 +73,7 @@ __all__ = (
     "Reference",
     "Sitelink",
     "Statement",
+    "StatementPatchRequest",
     "StatementRank",
     "StatementRequest",
 )
