@@ -7,6 +7,7 @@ from wikibase_rest_api_client.models.property_ import Property
 
 from ... import errors
 from ...client import AuthenticatedClient, Client
+from ...models.error import Error
 from ...models.get_property_fields_item import GetPropertyFieldsItem
 from ...types import UNSET, Response, Unset
 
@@ -58,11 +59,11 @@ def _parse_response(*, client: Union[AuthenticatedClient, Client], response: htt
     if response.status_code == HTTPStatus.OK:
         return Property.from_dict(response.json())
     if response.status_code == HTTPStatus.BAD_REQUEST:
-        return None
+        return Error.from_dict(response.json())
     if response.status_code == HTTPStatus.NOT_FOUND:
-        return None
+        return Error.from_dict(response.json())
     if response.status_code == HTTPStatus.INTERNAL_SERVER_ERROR:
-        return None
+        return Error.from_dict(response.json())
     if client.raise_on_unexpected_status:
         raise errors.UnexpectedStatus(response.status_code, response.content)
     else:

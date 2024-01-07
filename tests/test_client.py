@@ -25,7 +25,7 @@ from wikibase_rest_api_client.api.statements import (
     get_property_statements,
     get_statement,
 )
-from wikibase_rest_api_client.models import Item, Property
+from wikibase_rest_api_client.models import Error, Item, Property
 from wikibase_rest_api_client.models.statement_rank import StatementRank
 from wikibase_rest_api_client.types import Response
 
@@ -54,6 +54,18 @@ def test_get_item(client):
         assert parsed.descriptions is not None
 
 
+def test_get_item_error(client):
+    with client as client:
+        response: Response[Any] = get_item.sync_detailed("Q-1", client=client)
+        assert response.status_code == 400
+        assert type(response.parsed) == Error
+
+        # Q123456789 was famously deleted
+        response: Response[Any] = get_item.sync_detailed("Q123456789", client=client)
+        assert response.status_code == 404
+        assert type(response.parsed) == Error
+
+
 def test_get_property(client):
     with client as client:
         response: Response[Any] = get_property.sync_detailed("P31", client=client)
@@ -69,6 +81,17 @@ def test_get_property(client):
         assert parsed.labels["en"] == "instance of"
         assert len(parsed.aliases["en"]) > 1
         assert parsed.descriptions is not None
+
+
+def test_get_property_error(client):
+    with client as client:
+        response: Response[Any] = get_property.sync_detailed("P-1", client=client)
+        assert response.status_code == 400
+        assert type(response.parsed) == Error
+
+        response: Response[Any] = get_property.sync_detailed("P1", client=client)
+        assert response.status_code == 404
+        assert type(response.parsed) == Error
 
 
 def test_get_property_label(client):
@@ -218,6 +241,15 @@ def test_get_statement(client):
         assert parsed.id == "Q5$82b80d5f-4353-c7cb-1a3c-c0c8f4f5f237"
         assert parsed.rank == StatementRank.NORMAL
         assert parsed.property_.id == "P31"
+
+
+def test_get_statement_error(client):
+    with client as client:
+        response: Response[Any] = get_statement.sync_detailed("Q1$82b80d5f-4353-c7cb-1a3c-c0c8f4f5f237", client=client)
+        assert type(response) == Response
+        assert response.status_code == 404
+        assert response.parsed is not None
+        assert type(response.parsed) == Error
 
 
 def test_get_item_statement(client):
