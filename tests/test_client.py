@@ -315,6 +315,16 @@ def test_get_item_statements_redirect(client):
         # location field should tell us where to request next
         assert "location" in response.headers.keys()
 
+    follow_redirect_client = Client(headers={"User-Agent": "wikibase-rest-api-client/1.0.0"}, follow_redirects=True)
+    with follow_redirect_client as client:
+        response: Response[Any] = get_item_statements.sync_detailed("Q121879077", client=client)
+        assert type(response) == Response
+        assert response.status_code == 200
+        assert response.parsed is not None
+        parsed = response.parsed
+        assert "P31" in parsed
+        assert len(parsed["P31"]) > 0
+
 
 def test_get_property_statements(client):
     with client as client:
