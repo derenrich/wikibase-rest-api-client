@@ -291,6 +291,16 @@ def test_get_item_statements(client):
         assert len(parsed["P31"]) > 0
 
 
+def test_get_item_statements_redirect(client):
+    with client as client:
+        response: Response[Any] = get_item_statements.sync_detailed("Q121879077", client=client)
+        assert type(response) == Response
+        assert response.status_code == 308
+        assert response.parsed is None
+        # location field should tell us where to request next
+        assert "location" in response.headers.keys()
+
+
 def test_get_property_statements(client):
     with client as client:
         response: Response[Any] = get_property_statements.sync_detailed("P31", client=client)
