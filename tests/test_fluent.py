@@ -49,6 +49,12 @@ def test_lake_fluent(client):
     )
 
 
+def test_only_interesting_fluent(client):
+    c = FluentWikibaseClient(client, supported_props=["P31", "P17"])
+    fluent_item = c.get_item("Q1066")
+    fluent_item.statements.keys() == ["P31", "P17"]
+
+
 def test_error_fluent(client):
     c = FluentWikibaseClient(client)
     fluent_item = c.get_item("Q123456789")

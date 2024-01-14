@@ -1,5 +1,6 @@
 import re
 from dataclasses import dataclass
+from functools import lru_cache
 from typing import List, Mapping, Optional, TypeVar, Union
 
 from wikibase_rest_api_client import Client
@@ -40,10 +41,12 @@ T = TypeVar("T")
 class FluentWikibaseClient:
     lang: str
     _client: Client
+    _supported_props: Optional[List[str]] = None
 
-    def __init__(self, client: Client, *, lang="en") -> None:
+    def __init__(self, client: Client, *, lang="en", supported_props=None) -> None:
         self._client = client
         self.lang = lang
+        self._supported_props = supported_props
 
     @staticmethod
     def _check_response(response: Response[Union[T, Error]]) -> Optional[T]:
@@ -54,6 +57,7 @@ class FluentWikibaseClient:
         else:
             return response.parsed
 
+    @lru_cache(2048)
     def _get_property_label(self, pid: str) -> Optional[str]:
         label_response = get_property_label.sync_detailed(pid, self.lang, client=self._client)
         if label := self._check_response(label_response):
@@ -61,6 +65,7 @@ class FluentWikibaseClient:
         else:
             return None
 
+    @lru_cache(8192)
     def _get_item_label(self, qid: str) -> Optional[str]:
         label_response = get_item_label.sync_detailed(qid, self.lang, client=self._client)
         if label := self._check_response(label_response):
@@ -116,7 +121,12 @@ class FluentWikibaseClient:
 
             statements = dict()
             if item.statements:
-                for pid, values in item.statements.additional_properties.items():
+                pids = self._supported_props or item.statements.additional_properties.keys()
+
+                for pid in pids:
+                    if pid not in item.statements:
+                        continue
+                    values = item.statements[pid]
                     if property_label := self._get_property_label(pid):
                         datatype: Optional[str] = None
 
