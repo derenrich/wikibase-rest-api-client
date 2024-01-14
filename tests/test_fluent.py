@@ -6,8 +6,8 @@ from wikibase_rest_api_client.utilities.fluent import FluentWikibaseClient
 
 @pytest.fixture(scope="module")
 def fluent_client():
-    client = Client(timeout=200, headers={"User-Agent": "wikibase-rest-api-client/1.0.0"})
-    return FluentWikibaseClient(client)
+    client = Client(timeout=200, follow_redirects=True, headers={"User-Agent": "wikibase-rest-api-client/1.0.0"})
+    return FluentWikibaseClient(client, supported_props=["P31", "P17", "P569", "P625"])
 
 
 def test_basic_fluent(fluent_client):
@@ -48,6 +48,9 @@ def test_lake_fluent(fluent_client):
 
 
 def test_only_interesting_fluent(fluent_client):
+    client = Client(timeout=200, follow_redirects=True, headers={"User-Agent": "wikibase-rest-api-client/1.0.0"})
+    fluent_client = FluentWikibaseClient(client, supported_props=["P31", "P17"])
+
     fluent_item = fluent_client.get_item("Q1066")
     fluent_item.statements.keys() == ["P31", "P17"]
 

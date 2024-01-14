@@ -151,5 +151,3 @@ class FluentWikibaseClient:
                 aliases=aliases,
                 statements=statements,
             )
-        print(item_response)
-        return item_response
