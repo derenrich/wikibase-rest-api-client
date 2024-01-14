@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "wikibase-rest-api-client"
-version = "0.1.0"
+version = "0.1.1"
 description = "A client library for accessing the Wikibase REST API"
 
 authors = ["Daniel Erenrich <daniel@erenrich.net>"]

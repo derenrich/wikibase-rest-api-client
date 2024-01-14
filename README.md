@@ -86,6 +86,25 @@ client = AuthenticatedClient(
 ```
 
 
+## Fluent usage
+
+The library also offers a "fluent" API that is useful for many common operations. To use it you will first need to create a client as above.
+
+```python
+from wikibase_rest_api_client.utilities.fluent import FluentWikibaseClient
+from wikibase_rest_api_client import Client
+
+inner_client = Client()
+# defaults to English values
+c = FluentWikibaseClient(inner_client)
+item = c.get_item("Q5")
+assert item.label == "human"
+description = item.description
+aliases = item.aliases
+
+# see source for the format of item.statements
+```
+
 ## Advanced customizations
 
 There are more settings on the generated `Client` class which let you control more runtime behavior, check out the docstring on that class for more info. You can also customize the underlying `httpx.Client` or `httpx.AsyncClient` (depending on your use-case):
