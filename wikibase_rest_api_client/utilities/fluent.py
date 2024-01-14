@@ -151,3 +151,4 @@ class FluentWikibaseClient:
                 aliases=aliases,
                 statements=statements,
             )
+        return item_response
