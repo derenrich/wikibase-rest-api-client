@@ -30,7 +30,7 @@ if IN_GITHUB_ACTIONS:
     pytest.skip("Skipping write tests in github actions", allow_module_level=True)
 
 
-def test_add_remove_item_statement(client):
+def test_add_remove_item_statement(rw_client):
     response = add_item_statement.sync_detailed(
         TEST_ITEM,
         StatementRequest(
@@ -43,7 +43,7 @@ def test_add_remove_item_statement(client):
             ),
             comment="test add statement",
         ),
-        client=client,
+        client=rw_client,
     )
     assert response.status_code == 201
     assert response.parsed is not None
@@ -51,12 +51,12 @@ def test_add_remove_item_statement(client):
     assert response.parsed.id.startswith(TEST_ITEM + "$")
     statement_id = response.parsed.id
 
-    response = delete_statement.sync_detailed(statement_id, client=client)
+    response = delete_statement.sync_detailed(statement_id, client=rw_client)
     assert response.status_code == 200
     assert response.content == b'"Statement deleted"'
 
 
-def test_add_remove_property_statement(client):
+def test_add_remove_property_statement(rw_client):
     response = add_property_statement.sync_detailed(
         TEST_PROP,
         StatementRequest(
@@ -69,7 +69,7 @@ def test_add_remove_property_statement(client):
             ),
             comment="test add statement",
         ),
-        client=client,
+        client=rw_client,
     )
 
     assert response.status_code == 201
@@ -91,7 +91,7 @@ def test_add_remove_property_statement(client):
             ),
             comment="test replace statement",
         ),
-        client=client,
+        client=rw_client,
     )
     assert response.status_code == 200
     assert response.parsed is not None
@@ -105,7 +105,7 @@ def test_add_remove_property_statement(client):
             [PatchDocumentPatchItem(PatchDocumentPatchItemOp.REPLACE, "/value/content", "test string 3")],
             comment="test patch statement",
         ),
-        client=client,
+        client=rw_client,
     )
     assert response.status_code == 200
     assert response.parsed is not None
@@ -113,6 +113,6 @@ def test_add_remove_property_statement(client):
     assert response.parsed.id == statement_id
     assert response.parsed.value.content == "test string 3"
 
-    response = delete_statement.sync_detailed(statement_id, client=client)
+    response = delete_statement.sync_detailed(statement_id, client=rw_client)
     assert response.status_code == 200
     assert response.content == b'"Statement deleted"'

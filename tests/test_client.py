@@ -1,7 +1,5 @@
 from typing import Any
 
-import pytest
-
 from wikibase_rest_api_client import Client
 from wikibase_rest_api_client.api.aliases import (
     get_item_aliases,
@@ -28,11 +26,6 @@ from wikibase_rest_api_client.api.statements import (
 from wikibase_rest_api_client.models import Error, Item, Property
 from wikibase_rest_api_client.models.statement_rank import StatementRank
 from wikibase_rest_api_client.types import Response
-
-
-@pytest.fixture
-def client():
-    return Client(headers={"User-Agent": "wikibase-rest-api-client/1.0.0"})
 
 
 def test_get_item(client):
