@@ -58,8 +58,8 @@ if IN_GITHUB_ACTIONS:
 
 # just confirm the item we are going to test with still exists
 def test_get_test_props(client):
-    for prop in PROPS:
-        with client as client:
+    with client as client:
+        for prop in PROPS:
             response = get_property.sync_detailed(prop, client=client)
             assert type(response) == Response
             assert response.status_code == 200
