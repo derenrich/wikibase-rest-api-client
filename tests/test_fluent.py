@@ -6,7 +6,7 @@ from wikibase_rest_api_client.utilities.fluent import FluentWikibaseClient
 
 @pytest.fixture(scope="module")
 def fluent_client():
-    client = Client(httpx_args={"timeout": 200}, headers={"User-Agent": "wikibase-rest-api-client/1.0.0"})
+    client = Client(timeout=200, headers={"User-Agent": "wikibase-rest-api-client/1.0.0"})
     return FluentWikibaseClient(client)
 
 
