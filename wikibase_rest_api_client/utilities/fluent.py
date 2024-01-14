@@ -1,3 +1,4 @@
+import logging
 import re
 from dataclasses import dataclass
 from functools import lru_cache
@@ -9,6 +10,8 @@ from wikibase_rest_api_client.api.labels import get_item_label, get_property_lab
 from wikibase_rest_api_client.models import Error
 from wikibase_rest_api_client.models.value import Value
 from wikibase_rest_api_client.types import Response
+
+logger = logging.getLogger(__name__)
 
 
 @dataclass(frozen=True)
@@ -53,6 +56,7 @@ class FluentWikibaseClient:
         """Check if the response is valid."""
 
         if isinstance(response.parsed, Error):
+            logging.warning(f"Error response when hitting Wikibase: {response.parsed}")
             return None
         else:
             return response.parsed
