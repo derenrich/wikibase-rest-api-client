@@ -11,6 +11,7 @@ from wikibase_rest_api_client.api.aliases import (
 )
 from wikibase_rest_api_client.api.descriptions import (
     delete_item_description,
+    delete_property_description,
     patch_item_descriptions,
     patch_property_descriptions,
     replace_item_description,
@@ -185,11 +186,10 @@ def test_delete_property_description(rw_client):
         assert response.content == json.dumps(test_description).encode()
         assert_property_description(rw_client, TEST_PROP, "en", test_description)
 
-        # Not working yet? Marked as "in development" in the API docs
-        # response = delete_property_description.sync_detailed(TEST_PROP, "en", client=rw_client)
-        # assert type(response) == Response
-        # assert response.status_code == 200
-        # assert response.content == b'"Description deleted"'
+        response = delete_property_description.sync_detailed(TEST_PROP, "en", client=rw_client)
+        assert type(response) == Response
+        assert response.status_code == 200
+        assert response.content == b'"Description deleted"'
 
 
 def test_patch_item_aliases(rw_client):
