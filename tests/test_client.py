@@ -16,6 +16,7 @@ from wikibase_rest_api_client.api.descriptions import (
 from wikibase_rest_api_client.api.items import get_item
 from wikibase_rest_api_client.api.labels import get_item_label, get_item_labels, get_property_label, get_property_labels
 from wikibase_rest_api_client.api.properties import get_property
+from wikibase_rest_api_client.api.sitelinks import get_item_sitelinks
 from wikibase_rest_api_client.api.statements import (
     get_item_statement,
     get_item_statements,
@@ -272,6 +273,16 @@ def test_get_item_statement(client):
         assert parsed.id == "Q5$82b80d5f-4353-c7cb-1a3c-c0c8f4f5f237"
         assert parsed.rank == StatementRank.NORMAL
         assert parsed.property_.id == "P31"
+
+
+def test_get_item_sitelinks(client):
+    with client as client:
+        response: Response[Any] = get_item_sitelinks.sync_detailed("Q5", client=client)
+        assert type(response) == Response
+        # Isn't live yet?
+        # assert response.status_code == 200
+        # assert response.parsed is not None
+        # assert response.parsed.get("en").title == "Human"
 
 
 def test_get_property_statement(client):

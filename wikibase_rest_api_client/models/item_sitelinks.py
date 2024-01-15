@@ -3,6 +3,8 @@ from typing import TYPE_CHECKING, Any, Dict, List, Type, TypeVar
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
 
+from wikibase_rest_api_client.models.utils import GettableModel
+
 if TYPE_CHECKING:
     from ..models.sitelink import Sitelink
 
@@ -11,7 +13,7 @@ T = TypeVar("T", bound="ItemSitelinks")
 
 
 @_attrs_define
-class ItemSitelinks:
+class ItemSitelinks(GettableModel):
     """
     Example:
         {'afwiki': {'title': 'Douglas Adams', 'badges': ['Q17437798'], 'url':
