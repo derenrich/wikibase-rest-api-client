@@ -62,7 +62,9 @@ def _parse_response(
         return None
 
 
-def _build_response(*, client: Union[AuthenticatedClient, Client], response: httpx.Response) -> Response[List[str]]:
+def _build_response(
+    *, client: Union[AuthenticatedClient, Client], response: httpx.Response
+) -> Response[Union[List[str], Error]]:
     return Response(
         status_code=HTTPStatus(response.status_code),
         content=response.content,
@@ -79,7 +81,7 @@ def sync_detailed(
     if_modified_since: Union[Unset, str] = UNSET,
     if_unmodified_since: Union[Unset, str] = UNSET,
     authorization: Union[Unset, str] = UNSET,
-) -> Response[List[str]]:
+) -> Response[Union[List[str], Error]]:
     """Retrieve an Item's aliases in a specific language
 
     Args:
@@ -120,7 +122,7 @@ async def asyncio_detailed(
     if_modified_since: Union[Unset, str] = UNSET,
     if_unmodified_since: Union[Unset, str] = UNSET,
     authorization: Union[Unset, str] = UNSET,
-) -> Response[List[str]]:
+) -> Response[Union[List[str], Error]]:
     """Retrieve an Item's aliases in a specific language
 
     Args:

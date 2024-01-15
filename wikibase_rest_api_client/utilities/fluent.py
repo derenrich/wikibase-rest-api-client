@@ -1,8 +1,9 @@
 import logging
 import re
+import typing
 from dataclasses import dataclass
 from functools import lru_cache
-from typing import List, Mapping, Optional, TypeVar, Union
+from typing import Any, List, Mapping, Optional, TypeVar, Union
 
 from wikibase_rest_api_client import Client
 from wikibase_rest_api_client.api.items import get_item
@@ -37,6 +38,7 @@ class FluentWikibaseItem:
 
 WIKIDATA_TIME_REGEX = re.compile(r"^\+?(\d+)?-?(\d{1,2})-(\d{1,2})T\d{1,2}:\d{1,2}:\d{1,2}Z?$")
 
+EMPTY_STRING_DICT: Mapping[str, Any] = {}
 
 T = TypeVar("T")
 
@@ -77,6 +79,8 @@ class FluentWikibaseClient:
         else:
             return None
 
+    # the content of the values are not well typed
+    @typing.no_type_check
     def _value_to_string(self, value: Optional[Value], data_type: str) -> Optional[str]:
         if value:
             if data_type == "wikibase-item":
@@ -115,13 +119,14 @@ class FluentWikibaseClient:
             elif data_type == "wikibase-lexeme":
                 # explicitly not supported here
                 return None
+        return None
 
     def get_item(self, qid: str) -> Optional[FluentWikibaseItem]:
         item_response = get_item.sync_detailed(qid, client=self._client)
         if item := self._check_response(item_response):
-            label = (item.labels or {}).get(self.lang)
-            description = (item.descriptions or {}).get(self.lang)
-            aliases = (item.aliases or {}).get(self.lang)
+            label = (item.labels or EMPTY_STRING_DICT).get(self.lang)
+            description = (item.descriptions or EMPTY_STRING_DICT).get(self.lang)
+            aliases = (item.aliases or EMPTY_STRING_DICT).get(self.lang)
 
             statements = dict()
             if item.statements:
@@ -136,11 +141,12 @@ class FluentWikibaseClient:
 
                         fluent_values = []
                         for value in values:
-                            datatype = value.property_.data_type
-                            value_string = self._value_to_string(value.value, value.property_.data_type)
-                            if value_string:
-                                fluent_values.append(value_string)
-                        if fluent_values:
+                            if value.property_:
+                                datatype = value.property_.data_type or None
+                                value_string = self._value_to_string(value.value, value.property_.data_type)
+                                if value_string:
+                                    fluent_values.append(value_string)
+                        if fluent_values and datatype:
                             fluent_property = FluentProperty(pid=pid, label=property_label, datatype=datatype)
                             statements[fluent_property] = fluent_values
 
@@ -151,3 +157,4 @@ class FluentWikibaseClient:
                 aliases=aliases,
                 statements=statements,
             )
+        return None

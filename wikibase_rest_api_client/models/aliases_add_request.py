@@ -53,7 +53,7 @@ class AliasesAddRequest:
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
         d = src_dict.copy()
 
-        aliases = cast(str, d.pop("aliases"))
+        aliases = cast(List[str], d.pop("aliases"))
 
         tags = cast(List[str], d.pop("tags", UNSET))
 

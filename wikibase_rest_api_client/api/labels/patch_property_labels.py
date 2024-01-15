@@ -3,7 +3,7 @@ from typing import Any, Dict, Optional, Union
 
 import httpx
 
-from wikibase_rest_api_client.models import labels_patch_request
+from wikibase_rest_api_client.models.labels_patch_request import LabelsPatchRequest
 
 from ... import errors
 from ...client import AuthenticatedClient, Client
@@ -12,7 +12,7 @@ from ...types import UNSET, Response, Unset
 
 def _get_kwargs(
     property_id: str,
-    patch: labels_patch_request,
+    patch: LabelsPatchRequest,
     *,
     if_unmodified_since: Union[Unset, str] = UNSET,
 ) -> Dict[str, Any]:
@@ -66,7 +66,7 @@ def _build_response(*, client: Union[AuthenticatedClient, Client], response: htt
 
 def sync_detailed(
     property_id: str,
-    patch: labels_patch_request,
+    patch: LabelsPatchRequest,
     *,
     client: Union[AuthenticatedClient, Client],
     if_unmodified_since: Union[Unset, str] = UNSET,
@@ -100,7 +100,7 @@ def sync_detailed(
 
 async def asyncio_detailed(
     property_id: str,
-    patch: labels_patch_request,
+    patch: LabelsPatchRequest,
     *,
     client: Union[AuthenticatedClient, Client],
     if_unmodified_since: Union[Unset, str] = UNSET,

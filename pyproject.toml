@@ -28,6 +28,7 @@ python-dateutil = "^2.8.0"
 [tool.poetry.group.dev.dependencies]
 ruff = "^0.1.9"
 pytest = "^7.4.4"
+mypy = "^1.8.0"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
