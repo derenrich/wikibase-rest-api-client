@@ -30,6 +30,8 @@ jobs:
         run: poetry run ruff format . --check
       - name: Lint
         run: poetry run ruff check .
+      - name: MyPy check
+        run: poetry run mypy .
       - name: Run pytest check
         env:
           WIKIDATA_TEST_TOKEN: ${{ secrets.WIKIDATA_TEST_TOKEN }}
