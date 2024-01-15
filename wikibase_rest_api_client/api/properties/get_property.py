@@ -55,7 +55,9 @@ def _get_kwargs(
     return _kwargs
 
 
-def _parse_response(*, client: Union[AuthenticatedClient, Client], response: httpx.Response) -> Optional[Any]:
+def _parse_response(
+    *, client: Union[AuthenticatedClient, Client], response: httpx.Response
+) -> Optional[Union[Property, Error]]:
     if response.status_code == HTTPStatus.OK:
         return Property.from_dict(response.json())
     if response.status_code == HTTPStatus.BAD_REQUEST:
@@ -70,7 +72,9 @@ def _parse_response(*, client: Union[AuthenticatedClient, Client], response: htt
         return None
 
 
-def _build_response(*, client: Union[AuthenticatedClient, Client], response: httpx.Response) -> Response[Any]:
+def _build_response(
+    *, client: Union[AuthenticatedClient, Client], response: httpx.Response
+) -> Response[Union[Property, Error]]:
     return Response(
         status_code=HTTPStatus(response.status_code),
         content=response.content,
@@ -87,7 +91,7 @@ def sync_detailed(
     if_modified_since: Union[Unset, str] = UNSET,
     if_unmodified_since: Union[Unset, str] = UNSET,
     authorization: Union[Unset, str] = UNSET,
-) -> Response[Any]:
+) -> Response[Union[Property, Error]]:
     """Retrieve a single Wikibase Property by ID
 
     Args:
@@ -102,7 +106,7 @@ def sync_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[Any]
+        Response[Union[Property, Error]]
     """
 
     kwargs = _get_kwargs(
@@ -128,7 +132,7 @@ async def asyncio_detailed(
     if_modified_since: Union[Unset, str] = UNSET,
     if_unmodified_since: Union[Unset, str] = UNSET,
     authorization: Union[Unset, str] = UNSET,
-) -> Response[Any]:
+) -> Response[Union[Property, Error]]:
     """Retrieve a single Wikibase Property by ID
 
     Args:
@@ -143,7 +147,7 @@ async def asyncio_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[Any]
+        Response[Union[Property, Error]]
     """
 
     kwargs = _get_kwargs(

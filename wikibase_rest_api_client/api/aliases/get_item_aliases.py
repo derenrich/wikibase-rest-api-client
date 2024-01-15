@@ -37,7 +37,9 @@ def _get_kwargs(
     return _kwargs
 
 
-def _parse_response(*, client: Union[AuthenticatedClient, Client], response: httpx.Response) -> Optional[Any]:
+def _parse_response(
+    *, client: Union[AuthenticatedClient, Client], response: httpx.Response
+) -> Optional[Union[ItemAliases, Error]]:
     if response.status_code == HTTPStatus.OK:
         return ItemAliases.from_dict(response.json())
     if response.status_code == HTTPStatus.NOT_MODIFIED:
@@ -58,7 +60,9 @@ def _parse_response(*, client: Union[AuthenticatedClient, Client], response: htt
         return None
 
 
-def _build_response(*, client: Union[AuthenticatedClient, Client], response: httpx.Response) -> Response[Any]:
+def _build_response(
+    *, client: Union[AuthenticatedClient, Client], response: httpx.Response
+) -> Response[Union[ItemAliases, Error]]:
     return Response(
         status_code=HTTPStatus(response.status_code),
         content=response.content,
@@ -74,7 +78,7 @@ def sync_detailed(
     if_modified_since: Union[Unset, str] = UNSET,
     if_unmodified_since: Union[Unset, str] = UNSET,
     authorization: Union[Unset, str] = UNSET,
-) -> Response[Any]:
+) -> Response[Union[ItemAliases, Error]]:
     """Retrieve an Item's aliases
 
     Args:
@@ -112,7 +116,7 @@ async def asyncio_detailed(
     if_modified_since: Union[Unset, str] = UNSET,
     if_unmodified_since: Union[Unset, str] = UNSET,
     authorization: Union[Unset, str] = UNSET,
-) -> Response[Any]:
+) -> Response[Union[ItemAliases, Error]]:
     """Retrieve an Item's aliases
 
     Args:

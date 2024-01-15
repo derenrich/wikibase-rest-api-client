@@ -111,7 +111,7 @@ def sync_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[Any]
+        Response[Union[Item, Error]]
     """
 
     kwargs = _get_kwargs(
@@ -152,7 +152,7 @@ async def asyncio_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[Any]
+        Response[Union[Item, Error]]
     """
 
     kwargs = _get_kwargs(

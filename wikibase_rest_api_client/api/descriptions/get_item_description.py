@@ -1,5 +1,5 @@
 from http import HTTPStatus
-from typing import Any, Dict, Optional, Union
+from typing import Any, Dict, List, Optional, Union
 
 import httpx
 
@@ -39,7 +39,9 @@ def _get_kwargs(
     return _kwargs
 
 
-def _parse_response(*, client: Union[AuthenticatedClient, Client], response: httpx.Response) -> Optional[Any]:
+def _parse_response(
+    *, client: Union[AuthenticatedClient, Client], response: httpx.Response
+) -> Optional[Union[List[str], Error]]:
     if response.status_code == HTTPStatus.OK:
         return response.json()
     if response.status_code == HTTPStatus.NOT_MODIFIED:
@@ -60,7 +62,9 @@ def _parse_response(*, client: Union[AuthenticatedClient, Client], response: htt
         return None
 
 
-def _build_response(*, client: Union[AuthenticatedClient, Client], response: httpx.Response) -> Response[Any]:
+def _build_response(
+    *, client: Union[AuthenticatedClient, Client], response: httpx.Response
+) -> Response[Union[List[str], Error]]:
     return Response(
         status_code=HTTPStatus(response.status_code),
         content=response.content,
@@ -77,7 +81,7 @@ def sync_detailed(
     if_modified_since: Union[Unset, str] = UNSET,
     if_unmodified_since: Union[Unset, str] = UNSET,
     authorization: Union[Unset, str] = UNSET,
-) -> Response[Any]:
+) -> Response[Union[List[str], Error]]:
     """Retrieve an Item's description in a specific language
 
     Args:
@@ -118,7 +122,7 @@ async def asyncio_detailed(
     if_modified_since: Union[Unset, str] = UNSET,
     if_unmodified_since: Union[Unset, str] = UNSET,
     authorization: Union[Unset, str] = UNSET,
-) -> Response[Any]:
+) -> Response[Union[List[str], Error]]:
     """Retrieve an Item's description in a specific language
 
     Args:
