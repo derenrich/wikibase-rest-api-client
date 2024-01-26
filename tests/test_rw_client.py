@@ -223,6 +223,23 @@ def test_patch_item_aliases(rw_client):
         assert response.status_code == 200
 
 
+def test_add_item_aliases_in_language(rw_client):
+    with rw_client as rw_client:
+        test_alias = "Test alias " + str(os.urandom(10))
+        response = add_item_aliases_in_language.sync_detailed(TEST_ITEM, "en", [test_alias], client=rw_client)
+        assert type(response) == Response
+        assert response.status_code == 201 or response.status_code == 200
+
+        assert_item_alias(rw_client, TEST_ITEM, "en", test_alias)
+
+        patch = DescriptionsPatchRequest(
+            [PatchDocumentPatchItem(PatchDocumentPatchItemOp.REMOVE, "/en", "")], comment="blank aliases"
+        )
+        response = patch_item_aliases.sync_detailed(TEST_ITEM, patch, client=rw_client)
+        assert type(response) == Response
+        assert response.status_code == 200
+
+
 def test_patch_property_aliases(rw_client):
     with rw_client as rw_client:
         # set alias to some value

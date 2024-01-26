@@ -1,5 +1,5 @@
 from http import HTTPStatus
-from typing import Any, Dict, Optional, Union
+from typing import Any, Dict, List, Optional, Union
 
 import httpx
 
@@ -12,7 +12,7 @@ from ...types import UNSET, Response, Unset
 def _get_kwargs(
     item_id: str,
     language_code: str,
-    add: AliasesAddRequest,
+    add: Union[AliasesAddRequest, List[str]],
     *,
     if_modified_since: Union[Unset, str] = UNSET,
     if_unmodified_since: Union[Unset, str] = UNSET,
@@ -27,6 +27,9 @@ def _get_kwargs(
 
     if not isinstance(authorization, Unset):
         headers["Authorization"] = authorization
+
+    if isinstance(add, list):
+        add = AliasesAddRequest(aliases=add)
 
     _kwargs: Dict[str, Any] = {
         "method": "post",
@@ -78,7 +81,7 @@ def _build_response(*, client: Union[AuthenticatedClient, Client], response: htt
 def sync_detailed(
     item_id: str,
     language_code: str,
-    add: AliasesAddRequest,
+    add: Union[AliasesAddRequest, List[str]],
     *,
     client: Union[AuthenticatedClient, Client],
     if_modified_since: Union[Unset, str] = UNSET,
@@ -90,7 +93,7 @@ def sync_detailed(
     Args:
         item_id (str):
         language_code (str):
-        add (AliasesAddRequest):
+        add (Union[AliasesAddRequest, List[str]]):
         if_modified_since (Union[Unset, str]):
         if_unmodified_since (Union[Unset, str]):
         authorization (Union[Unset, str]):
@@ -122,7 +125,7 @@ def sync_detailed(
 async def asyncio_detailed(
     item_id: str,
     language_code: str,
-    add: AliasesAddRequest,
+    add: Union[AliasesAddRequest, List[str]],
     *,
     client: Union[AuthenticatedClient, Client],
     if_modified_since: Union[Unset, str] = UNSET,
@@ -134,7 +137,7 @@ async def asyncio_detailed(
     Args:
         item_id (str):
         language_code (str):
-        add (AliasesAddRequest):
+        add (Union[AliasesAddRequest, List[str]]):
         if_modified_since (Union[Unset, str]):
         if_unmodified_since (Union[Unset, str]):
         authorization (Union[Unset, str]):

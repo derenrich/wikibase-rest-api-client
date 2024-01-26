@@ -12,7 +12,7 @@ from ...types import UNSET, Response, Unset
 def _get_kwargs(
     property_id: str,
     language_code: str,
-    replace_request: DescriptionReplaceRequest,
+    replace_request: Union[DescriptionReplaceRequest, str],
     *,
     if_modified_since: Union[Unset, str] = UNSET,
     if_unmodified_since: Union[Unset, str] = UNSET,
@@ -27,6 +27,9 @@ def _get_kwargs(
 
     if not isinstance(authorization, Unset):
         headers["Authorization"] = authorization
+
+    if not isinstance(replace_request, DescriptionReplaceRequest):
+        replace_request = DescriptionReplaceRequest(description=replace_request)
 
     _kwargs: Dict[str, Any] = {
         "method": "put",
@@ -76,7 +79,7 @@ def _build_response(*, client: Union[AuthenticatedClient, Client], response: htt
 def sync_detailed(
     property_id: str,
     language_code: str,
-    replace_request: DescriptionReplaceRequest,
+    replace_request: Union[DescriptionReplaceRequest, str],
     *,
     client: Union[AuthenticatedClient, Client],
     if_modified_since: Union[Unset, str] = UNSET,
@@ -88,7 +91,7 @@ def sync_detailed(
     Args:
         property_id (str):
         language_code (str):
-        replace_request (DescriptionReplaceRequest):
+        replace_request (Union[DescriptionReplaceRequest, str]):
         if_modified_since (Union[Unset, str]):
         if_unmodified_since (Union[Unset, str]):
         authorization (Union[Unset, str]):
@@ -120,7 +123,7 @@ def sync_detailed(
 async def asyncio_detailed(
     property_id: str,
     language_code: str,
-    replace_request: DescriptionReplaceRequest,
+    replace_request: Union[DescriptionReplaceRequest, str],
     *,
     client: Union[AuthenticatedClient, Client],
     if_modified_since: Union[Unset, str] = UNSET,
@@ -132,7 +135,7 @@ async def asyncio_detailed(
     Args:
         property_id (str):
         language_code (str):
-        replace_request (DescriptionReplaceRequest):
+        replace_request (Union[DescriptionReplaceRequest, str]):
         if_modified_since (Union[Unset, str]):
         if_unmodified_since (Union[Unset, str]):
         authorization (Union[Unset, str]):

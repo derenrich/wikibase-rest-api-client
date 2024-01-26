@@ -12,7 +12,7 @@ from ...types import UNSET, Response, Unset
 def _get_kwargs(
     item_id: str,
     language_code: str,
-    replace_request: LabelReplaceRequest,
+    replace_request: Union[LabelReplaceRequest, str],
     *,
     if_modified_since: Union[Unset, str] = UNSET,
     if_unmodified_since: Union[Unset, str] = UNSET,
@@ -27,6 +27,9 @@ def _get_kwargs(
 
     if not isinstance(authorization, Unset):
         headers["Authorization"] = authorization
+
+    if not isinstance(replace_request, LabelReplaceRequest):
+        replace_request = LabelReplaceRequest(label=replace_request)
 
     _kwargs: Dict[str, Any] = {
         "method": "put",
@@ -90,6 +93,7 @@ def sync_detailed(
     Args:
         item_id (str):
         language_code (str):
+        replace_request (Union[LabelReplaceRequest, str]):
         if_modified_since (Union[Unset, str]):
         if_unmodified_since (Union[Unset, str]):
         authorization (Union[Unset, str]):
@@ -133,6 +137,7 @@ async def asyncio_detailed(
     Args:
         item_id (str):
         language_code (str):
+        replace_request (Union[LabelReplaceRequest, str]):
         if_modified_since (Union[Unset, str]):
         if_unmodified_since (Union[Unset, str]):
         authorization (Union[Unset, str]):
