@@ -274,7 +274,12 @@ def test_patch_property_aliases(rw_client):
 def test_add_remove_sitelink(rw_client):
     with rw_client as rw_client:
         pass
-        # waiting until we have add sitelink support to test this
+        # TODO: this doesn't work as it's not implemented yet
+        # req = SitelinkReplaceRequest(Sitelink("Google"))
+        # response = replace_sitelink.sync_detailed(TEST_ITEM, "enwiki", req, client=rw_client)
+        # print(response.content)
+        # assert response.status_code == 200
+        #
         # response = delete_item_sitelink.sync_detailed(TEST_ITEM, "enwiki", client=rw_client)
         # assert type(response) == Response
         # assert response.status_code == 200
