@@ -269,3 +269,13 @@ def test_patch_property_aliases(rw_client):
         response = patch_property_aliases.sync_detailed(TEST_PROP, patch, client=rw_client)
         assert type(response) == Response
         assert response.status_code == 200
+
+
+def test_add_remove_sitelink(rw_client):
+    with rw_client as rw_client:
+        pass
+        # waiting until we have add sitelink support to test this
+        # response = delete_item_sitelink.sync_detailed(TEST_ITEM, "enwiki", client=rw_client)
+        # assert type(response) == Response
+        # assert response.status_code == 200
+        # assert response.content == b'"Sitelink deleted"'
