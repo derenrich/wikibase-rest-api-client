@@ -31,6 +31,7 @@ from .property_statements import PropertyStatements
 from .qualifier import Qualifier
 from .reference import Reference
 from .sitelink import Sitelink
+from .sitelink_replace_request import SitelinkReplaceRequest
 from .statement import Statement
 from .statement_patch_request import StatementPatchRequest
 from .statement_rank import StatementRank
@@ -72,6 +73,7 @@ __all__ = (
     "ValueType",
     "Reference",
     "Sitelink",
+    "SitelinkReplaceRequest",
     "Statement",
     "StatementPatchRequest",
     "StatementRank",
