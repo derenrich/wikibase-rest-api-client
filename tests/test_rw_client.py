@@ -1,5 +1,6 @@
 import json
 import os
+import time
 
 import pytest
 
@@ -26,6 +27,7 @@ from wikibase_rest_api_client.api.labels import (
     replace_property_label,
 )
 from wikibase_rest_api_client.api.properties import get_property
+from wikibase_rest_api_client.api.sitelinks import delete_item_sitelink, replace_sitelink
 from wikibase_rest_api_client.models import (
     AliasesAddRequest,
     DescriptionReplaceRequest,
@@ -35,6 +37,8 @@ from wikibase_rest_api_client.models import (
     PatchDocumentPatchItem,
     PatchDocumentPatchItemOp,
 )
+from wikibase_rest_api_client.models.sitelink import Sitelink
+from wikibase_rest_api_client.models.sitelink_replace_request import SitelinkReplaceRequest
 from wikibase_rest_api_client.types import Response
 
 from .utils import (
@@ -262,6 +266,9 @@ def test_patch_property_aliases(rw_client):
 
         assert_property_alias(rw_client, TEST_PROP, "en", test_alias)
 
+        # we get a conflict without this?
+        time.sleep(1)
+
         # now blank the aliases
         patch = DescriptionsPatchRequest(
             [PatchDocumentPatchItem(PatchDocumentPatchItemOp.REMOVE, "/en", "")], comment="blank aliases"
@@ -273,14 +280,20 @@ def test_patch_property_aliases(rw_client):
 
 def test_add_remove_sitelink(rw_client):
     with rw_client as rw_client:
-        pass
-        # TODO: this doesn't work as it's not implemented yet
-        # req = SitelinkReplaceRequest(Sitelink("Google"))
-        # response = replace_sitelink.sync_detailed(TEST_ITEM, "enwiki", req, client=rw_client)
-        # print(response.content)
-        # assert response.status_code == 200
-        #
-        # response = delete_item_sitelink.sync_detailed(TEST_ITEM, "enwiki", client=rw_client)
+        req = SitelinkReplaceRequest(Sitelink("User:BrokenSegue"))
+        response = replace_sitelink.sync_detailed(TEST_ITEM, "enwiki", req, client=rw_client)
+        assert response.status_code == 201 or response.status_code == 200
+
+        response = delete_item_sitelink.sync_detailed(TEST_ITEM, "enwiki", client=rw_client)
+        assert type(response) == Response
+        assert response.status_code == 200
+        assert response.content == b'"Sitelink deleted"'
+
+        # TODO: seems to not be working yet?
+        # patches = [PatchDocumentPatchItem(PatchDocumentPatchItemOp.REPLACE, "/enwiki/title", "User:BrokenSegue")]
+        # patch_req = SitelinkPatchRequest(patches, comment="patch sitelinks")
+        # response = patch_item_sitelinks.sync_detailed(TEST_ITEM, patch_req, client=rw_client)
+        # print(response.content, response.parsed)
         # assert type(response) == Response
         # assert response.status_code == 200
-        # assert response.content == b'"Sitelink deleted"'
+        # assert type(response.parsed) == ItemSitelinks

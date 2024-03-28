@@ -3,16 +3,17 @@ from typing import Any, Dict, Optional, Union
 
 import httpx
 
+from wikibase_rest_api_client.models.item_sitelinks import ItemSitelinks
+
 from ... import errors
 from ...client import AuthenticatedClient, Client
-from ...models import SitelinkReplaceRequest
+from ...models import SitelinkPatchRequest
 from ...types import UNSET, Response, Unset
 
 
 def _get_kwargs(
     item_id: str,
-    site_id: str,
-    replace_request: SitelinkReplaceRequest,
+    patch_request: SitelinkPatchRequest,
     *,
     if_modified_since: Union[Unset, str] = UNSET,
     if_unmodified_since: Union[Unset, str] = UNSET,
@@ -29,21 +30,20 @@ def _get_kwargs(
         headers["Authorization"] = authorization
 
     _kwargs: Dict[str, Any] = {
-        "method": "put",
-        "url": "/entities/items/{item_id}/sitelinks/{site_id}".format(
+        "method": "patch",
+        "url": "/entities/items/{item_id}/sitelinks".format(
             item_id=item_id,
-            site_id=site_id,
         ),
-        "json": replace_request.to_dict(),
+        "json": patch_request.to_dict(),
     }
 
     _kwargs["headers"] = headers
     return _kwargs
 
 
-def _parse_response(*, client: Union[AuthenticatedClient, Client], response: httpx.Response) -> Optional[Any]:
+def _parse_response(*, client: Union[AuthenticatedClient, Client], response: httpx.Response) -> Optional[ItemSitelinks]:
     if response.status_code == HTTPStatus.OK:
-        return None
+        return ItemSitelinks.from_dict(response.json())
     if response.status_code == HTTPStatus.CREATED:
         return None
     if response.status_code == HTTPStatus.NOT_MODIFIED:
@@ -64,7 +64,7 @@ def _parse_response(*, client: Union[AuthenticatedClient, Client], response: htt
         return None
 
 
-def _build_response(*, client: Union[AuthenticatedClient, Client], response: httpx.Response) -> Response[Any]:
+def _build_response(*, client: Union[AuthenticatedClient, Client], response: httpx.Response) -> Response[ItemSitelinks]:
     return Response(
         status_code=HTTPStatus(response.status_code),
         content=response.content,
@@ -75,20 +75,18 @@ def _build_response(*, client: Union[AuthenticatedClient, Client], response: htt
 
 def sync_detailed(
     item_id: str,
-    site_id: str,
-    replace_request: SitelinkReplaceRequest,
+    patch_request: SitelinkPatchRequest,
     *,
     client: Union[AuthenticatedClient, Client],
     if_modified_since: Union[Unset, str] = UNSET,
     if_unmodified_since: Union[Unset, str] = UNSET,
     authorization: Union[Unset, str] = UNSET,
-) -> Response[Any]:
-    """Add / Replace a sitelink
+) -> Response[ItemSitelinks]:
+    """Patch sitelinks
 
     Args:
         item_id (str):
-        site_id (str):
-        replace_request SitelinkReplaceRequest:
+        patch_request SitelinkPatchRequest:
         if_modified_since (Union[Unset, str]):
         if_unmodified_since (Union[Unset, str]):
         authorization (Union[Unset, str]):
@@ -103,8 +101,7 @@ def sync_detailed(
 
     kwargs = _get_kwargs(
         item_id=item_id,
-        site_id=site_id,
-        replace_request=replace_request,
+        patch_request=patch_request,
         if_modified_since=if_modified_since,
         if_unmodified_since=if_unmodified_since,
         authorization=authorization,
@@ -119,20 +116,18 @@ def sync_detailed(
 
 async def asyncio_detailed(
     item_id: str,
-    site_id: str,
-    replace_request: SitelinkReplaceRequest,
+    patch_request: SitelinkPatchRequest,
     *,
     client: Union[AuthenticatedClient, Client],
     if_modified_since: Union[Unset, str] = UNSET,
     if_unmodified_since: Union[Unset, str] = UNSET,
     authorization: Union[Unset, str] = UNSET,
-) -> Response[Any]:
-    """Add / Replace a sitelink
+) -> Response[ItemSitelinks]:
+    """Patch sitelinks
 
     Args:
         item_id (str):
-        site_id (str):
-        replace_request (SitelinkReplaceRequest):
+        patch_request (SitelinkPatchRequest):
         if_modified_since (Union[Unset, str]):
         if_unmodified_since (Union[Unset, str]):
         authorization (Union[Unset, str]):
@@ -147,8 +142,7 @@ async def asyncio_detailed(
 
     kwargs = _get_kwargs(
         item_id=item_id,
-        site_id=site_id,
-        replace_request=replace_request,
+        patch_request=patch_request,
         if_modified_since=if_modified_since,
         if_unmodified_since=if_unmodified_since,
         authorization=authorization,

@@ -1,4 +1,4 @@
-""" Contains all the data models used in inputs/outputs """
+"""Contains all the data models used in inputs/outputs"""
 
 from .aliases import Aliases
 from .aliases_add_request import AliasesAddRequest
@@ -31,6 +31,7 @@ from .property_statements import PropertyStatements
 from .qualifier import Qualifier
 from .reference import Reference
 from .sitelink import Sitelink
+from .sitelink_patch_request import SitelinkPatchRequest
 from .sitelink_replace_request import SitelinkReplaceRequest
 from .statement import Statement
 from .statement_patch_request import StatementPatchRequest
@@ -73,6 +74,7 @@ __all__ = (
     "ValueType",
     "Reference",
     "Sitelink",
+    "SitelinkPatchRequest",
     "SitelinkReplaceRequest",
     "Statement",
     "StatementPatchRequest",
