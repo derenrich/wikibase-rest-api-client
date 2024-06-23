@@ -25,6 +25,8 @@ class FluentProperty:
 @dataclass(frozen=True)
 class FluentValue:
     value: Optional[str]
+    qid: Optional[str] = None
+    pid: Optional[str] = None
 
 
 @dataclass(frozen=True)
@@ -33,7 +35,7 @@ class FluentWikibaseItem:
     label: Optional[str]
     description: Optional[str]
     aliases: Optional[List[str]]
-    statements: Mapping[FluentProperty, List[str]]
+    statements: Mapping[FluentProperty, List[FluentValue]]
 
 
 WIKIDATA_TIME_REGEX = re.compile(r"^\+?(\d+)?-?(\d{1,2})-(\d{1,2})T\d{1,2}:\d{1,2}:\d{1,2}Z?$")
@@ -81,41 +83,41 @@ class FluentWikibaseClient:
 
     # the content of the values are not well typed
     @typing.no_type_check
-    def _value_to_string(self, value: Optional[Value], data_type: str) -> Optional[str]:
+    def _value_to_string(self, value: Optional[Value], data_type: str) -> Optional[FluentValue]:
         if value:
             if data_type == "wikibase-item":
                 if label := self._get_item_label(value.content):
-                    return label
+                    return FluentValue(label, qid=value.content)
             elif data_type == "string":
-                return value.content
+                return FluentValue(value.content)
             elif data_type == "monolingualtext":
-                return value.content["text"]
+                return FluentValue(value.content["text"])
             elif data_type == "url":
-                return value.content
+                return FluentValue(value.content)
             elif data_type == "external-id":
-                return value.content
+                return FluentValue(value.content)
             elif data_type == "commonsMedia":
-                return value.content
+                return FluentValue(value.content)
             elif data_type == "wikibase-property":
                 if label := self._get_property_label(value.content):
-                    return label
+                    return FluentValue(label, pid=value.content)
             elif data_type == "quantity":
-                return value.content["amount"]
+                return FluentValue(value.content["amount"])
             elif data_type == "time" and value.content:
                 time_string = value.content["time"]
                 precision = value.content["precision"]
                 if match := WIKIDATA_TIME_REGEX.match(time_string):
                     y, m, d = match.groups()
                     if precision >= 11:
-                        return f"{y}-{m}-{d}"
+                        return FluentValue(f"{y}-{m}-{d}")
                     elif precision >= 10:
-                        return f"{y}-{m}"
+                        return FluentValue(f"{y}-{m}")
                     elif precision >= 9:
-                        return f"{y}"
+                        return FluentValue(f"{y}")
             elif data_type == "globe-coordinate":
                 latitude = value.content["latitude"]
                 longitude = value.content["longitude"]
-                return f"{latitude}, {longitude}"
+                return FluentValue(f"{latitude}, {longitude}")
             elif data_type == "wikibase-lexeme":
                 # explicitly not supported here
                 return None

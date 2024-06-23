@@ -26,8 +26,14 @@ def test_human_fluent(fluent_client):
     # did we format the date correctly?
     assert (
         "1732-02-22"
-        in [d for (p, d) in fluent_item.statements.items() if p.label == "date of birth" and p.datatype == "time"][0]
+        in [
+            [d.value for d in ds]
+            for (p, ds) in fluent_item.statements.items()
+            if p.label == "date of birth" and p.datatype == "time"
+        ][0]
     )
+
+    assert "Q5" in [[d.qid for d in ds] for (p, ds) in fluent_item.statements.items() if p.pid == "P31"][0]
 
 
 def test_lake_fluent(fluent_client):
