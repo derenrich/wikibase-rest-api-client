@@ -35,7 +35,7 @@ class PropertyInfo:
         if id is not UNSET:
             field_dict["id"] = id
         if data_type is not UNSET:
-            field_dict["data-type"] = data_type
+            field_dict["data_type"] = data_type
 
         return field_dict
 
@@ -51,7 +51,10 @@ class PropertyInfo:
                 return data
             return cast(Union[None, Unset, str], data)
 
-        data_type = _parse_data_type(d.pop("data-type", UNSET))
+        data_type = _parse_data_type(d.pop("data_type", UNSET))
+        if not data_type:
+            # they changed the API at some point
+            data_type = _parse_data_type(d.pop("data-type", UNSET))
 
         qualifier_property = cls(
             id=id,

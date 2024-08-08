@@ -129,11 +129,9 @@ class FluentWikibaseClient:
             label = (item.labels or EMPTY_STRING_DICT).get(self.lang)
             description = (item.descriptions or EMPTY_STRING_DICT).get(self.lang)
             aliases = (item.aliases or EMPTY_STRING_DICT).get(self.lang)
-
             statements = dict()
             if item.statements:
                 pids = self._supported_props or item.statements.additional_properties.keys()
-
                 for pid in pids:
                     if pid not in item.statements:
                         continue

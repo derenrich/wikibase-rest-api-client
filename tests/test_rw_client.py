@@ -293,7 +293,6 @@ def test_add_remove_sitelink(rw_client):
         # patches = [PatchDocumentPatchItem(PatchDocumentPatchItemOp.REPLACE, "/enwiki/title", "User:BrokenSegue")]
         # patch_req = SitelinkPatchRequest(patches, comment="patch sitelinks")
         # response = patch_item_sitelinks.sync_detailed(TEST_ITEM, patch_req, client=rw_client)
-        # print(response.content, response.parsed)
         # assert type(response) == Response
         # assert response.status_code == 200
         # assert type(response.parsed) == ItemSitelinks
