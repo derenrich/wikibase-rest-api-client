@@ -58,7 +58,15 @@ def test_only_interesting_fluent(fluent_client):
     fluent_client = FluentWikibaseClient(client, supported_props=["P31", "P17"])
 
     fluent_item = fluent_client.get_item("Q1066")
-    fluent_item.statements.keys() == ["P31", "P17"]
+    assert [p.pid for p in fluent_item.statements.keys()] == ["P31", "P17"]
+
+    for p, vs in fluent_item.statements.items():
+        if p.pid == "P31":
+            values = [v.value for v in vs]
+            assert "lake" in values
+        elif p.pid == "P17":
+            values = [v.value for v in vs]
+            assert "Canada" in values
 
 
 def test_error_fluent(fluent_client):
