@@ -35,7 +35,7 @@ class Client:
     """
 
     raise_on_unexpected_status: bool = field(default=False, kw_only=True)
-    _base_url: str = "https://www.wikidata.org/w/rest.php/wikibase/v0/"
+    _base_url: str = "https://www.wikidata.org/w/rest.php/wikibase/v1/"
     _cookies: Dict[str, str] = field(factory=dict, kw_only=True)
     _headers: Dict[str, str] = field(factory=dict, kw_only=True)
     _timeout: Optional[httpx.Timeout] = field(default=None, kw_only=True)
@@ -166,7 +166,7 @@ class AuthenticatedClient:
 
     raise_on_unexpected_status: bool = field(default=False, kw_only=True)
     token: str
-    _base_url: str = "https://www.wikidata.org/w/rest.php/wikibase/v0/"
+    _base_url: str = "https://www.wikidata.org/w/rest.php/wikibase/v1/"
     _cookies: Dict[str, str] = field(factory=dict, kw_only=True)
     _headers: Dict[str, str] = field(factory=dict, kw_only=True)
     _timeout: Optional[httpx.Timeout] = field(default=None, kw_only=True)

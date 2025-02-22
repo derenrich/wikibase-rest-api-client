@@ -12,7 +12,7 @@ def rw_client():
 
     if token:
         return AuthenticatedClient(
-            base_url="https://test.wikidata.org/w/rest.php/wikibase/v0/",
+            base_url="https://test.wikidata.org/w/rest.php/wikibase/v1/",
             token=token,
             headers={"User-Agent": "wikibase-rest-api-client/1.0.0"},
         )
