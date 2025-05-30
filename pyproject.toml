@@ -1,9 +1,9 @@
-[tool.poetry]
+[project]
 name = "wikibase-rest-api-client"
-version = "0.2.2"
+version = "0.2.3"
 description = "A client library for accessing the Wikibase REST API"
 
-authors = ["Daniel Erenrich <daniel@erenrich.net>"]
+authors = [{name = "Daniel Erenrich", email="daniel@erenrich.net"}]
 license = "MIT"
 
 readme = "README.md"
@@ -21,7 +21,7 @@ Issues = "https://github.com/derenrich/wikibase-rest-api-client/issues"
 
 [tool.poetry.dependencies]
 python = "^3.8"
-httpx = ">=0.20.0,<0.28.0"
+httpx = "~0"
 attrs = ">=21.3.0"
 python-dateutil = "^2.8.0"
 
