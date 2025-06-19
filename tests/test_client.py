@@ -14,7 +14,7 @@ from wikibase_rest_api_client.api.descriptions import (
     get_property_descriptions,
 )
 from wikibase_rest_api_client.api.items import get_item
-from wikibase_rest_api_client.api.labels import get_item_label, get_item_labels, get_property_label, get_property_labels
+from wikibase_rest_api_client.api.labels import get_item_label, get_item_labels, get_property_label, get_property_labels, get_item_label_with_language_fallback
 from wikibase_rest_api_client.api.properties import get_property
 from wikibase_rest_api_client.api.sitelinks import get_item_site_sitelink, get_item_sitelinks
 from wikibase_rest_api_client.api.statements import (
@@ -108,6 +108,16 @@ def test_get_item_label(client):
         assert type(response.parsed) == str
         parsed = response.parsed
         assert parsed == "human"
+
+def test_get_item_label_with_fallback(client):
+    with client as client:
+        response: Response[Any] = get_item_label_with_language_fallback.sync_detailed("Q7614378", "zh", client=client)
+        assert type(response) == Response
+        assert response.status_code == 200
+        assert response.parsed is not None
+        assert type(response.parsed) == str
+        parsed = response.parsed
+        assert parsed == "Steve Yegge"
 
 
 def test_get_item_labels(client):
