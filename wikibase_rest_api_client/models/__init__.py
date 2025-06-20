@@ -18,6 +18,7 @@ from .item_statements import ItemStatements
 from .label_replace_request import LabelReplaceRequest
 from .labels import Labels
 from .labels_patch_request import LabelsPatchRequest
+from .language_value import LanguageValue
 from .mediawiki_edit import MediawikiEdit
 from .patch_document import PatchDocument
 from .patch_document_patch_item import PatchDocumentPatchItem
@@ -30,6 +31,9 @@ from .property_labels import PropertyLabels
 from .property_statements import PropertyStatements
 from .qualifier import Qualifier
 from .reference import Reference
+from .search_item_result import SearchItemResult
+from .search_item_results import SearchItemResults
+from .search_match import SearchMatch
 from .sitelink import Sitelink
 from .sitelink_patch_request import SitelinkPatchRequest
 from .sitelink_replace_request import SitelinkReplaceRequest
@@ -59,6 +63,7 @@ __all__ = (
     "Labels",
     "LabelsPatchRequest",
     "LabelReplaceRequest",
+    "LanguageValue",
     "MediawikiEdit",
     "PatchDocument",
     "PatchDocumentPatchItem",
@@ -73,6 +78,9 @@ __all__ = (
     "Value",
     "ValueType",
     "Reference",
+    "SearchItemResult",
+    "SearchItemResults", 
+    "SearchMatch",
     "Sitelink",
     "SitelinkPatchRequest",
     "SitelinkReplaceRequest",
