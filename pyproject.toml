@@ -2,16 +2,22 @@
 name = "wikibase-rest-api-client"
 version = "0.2.5"
 description = "A client library for accessing the Wikibase REST API"
+authors = [{name = "Daniel Erenrich", email = "daniel@erenrich.net"}]
+license = {text = "MIT"}
+readme = "README.md"
+classifiers = ["Topic :: Internet :: WWW/HTTP :: Dynamic Content :: Wiki"]
+keywords = ["wikibase", "wikidata", "rest-api", "client"]
+requires-python = ">=3.8"
 
-authors = [{name = "Daniel Erenrich", email="daniel@erenrich.net"}]
+[tool.poetry]
+name = "wikibase-rest-api-client"
+version = "0.2.5"
+description = "A client library for accessing the Wikibase REST API"
+authors = ["Daniel Erenrich <daniel@erenrich.net>"]
 license = "MIT"
-
 readme = "README.md"
 packages = [{ include = "wikibase_rest_api_client" }]
 include = ["CHANGELOG.md", "wikibase_rest_api_client/py.typed"]
-
-classifiers = ["Topic :: Internet :: WWW/HTTP :: Dynamic Content :: Wiki"]
-keywords = ["wikibase", "wikidata", "rest-api", "client"]
 
 [tool.poetry.urls]
 Homepage = "https://github.com/derenrich/wikibase-rest-api-client"
