@@ -3,8 +3,8 @@ from typing import Any, Dict, List, Optional, Type, TypeVar
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
 
-from .search_match import SearchMatch
 from .language_value import LanguageValue
+from .search_match import SearchMatch
 
 T = TypeVar("T", bound="SearchItemResult")
 
@@ -52,8 +52,8 @@ class SearchItemResult:
 
     @classmethod
     def from_dict(cls: Type[T], src_dict: Dict[str, Any]) -> T:
-        from .search_match import SearchMatch
         from .language_value import LanguageValue
+        from .search_match import SearchMatch
 
         d = src_dict.copy()
         id = d.pop("id")

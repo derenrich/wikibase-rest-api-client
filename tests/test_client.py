@@ -16,10 +16,10 @@ from wikibase_rest_api_client.api.descriptions import (
 from wikibase_rest_api_client.api.items import get_item
 from wikibase_rest_api_client.api.labels import (
     get_item_label,
+    get_item_label_with_language_fallback,
     get_item_labels,
     get_property_label,
     get_property_labels,
-    get_item_label_with_language_fallback,
 )
 from wikibase_rest_api_client.api.properties import get_property
 from wikibase_rest_api_client.api.search import search_item

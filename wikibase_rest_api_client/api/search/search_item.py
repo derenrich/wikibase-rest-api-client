@@ -1,8 +1,8 @@
+import urllib.parse
 from http import HTTPStatus
-from typing import Any, Dict, List, Optional, Union
+from typing import Any, Dict, Optional, Union
 
 import httpx
-import urllib.parse
 
 from ... import errors
 from ...client import AuthenticatedClient, Client
