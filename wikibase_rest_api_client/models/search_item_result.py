@@ -12,7 +12,7 @@ T = TypeVar("T", bound="SearchItemResult")
 @_attrs_define
 class SearchItemResult:
     """A single search result item
-    
+
     Attributes:
         id (str): The item ID (e.g., "Q123")
         display_label (LanguageValue): The display label for the item

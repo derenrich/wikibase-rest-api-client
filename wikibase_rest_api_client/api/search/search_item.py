@@ -19,13 +19,13 @@ def _get_kwargs(
     offset: Union[Unset, int] = 0,
 ) -> Dict[str, Any]:
     params: Dict[str, Any] = {}
-    
+
     params["q"] = q
     params["language"] = language
-    
+
     if not isinstance(limit, Unset):
         params["limit"] = limit
-        
+
     if not isinstance(offset, Unset):
         params["offset"] = offset
 
@@ -94,12 +94,11 @@ def sync_detailed(
         offset=offset,
     )
 
-
     # for now this only works on v0 endpoints
     base_url = str(client.get_httpx_client().base_url)
     if "/v1/" in base_url:
         base_url = base_url.replace("/v1/", "/v0/")
-        kwargs['url'] = urllib.parse.urljoin(base_url, "." + kwargs['url'])
+        kwargs["url"] = urllib.parse.urljoin(base_url, "." + kwargs["url"])
 
     response = client.get_httpx_client().request(
         **kwargs,

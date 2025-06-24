@@ -79,7 +79,7 @@ __all__ = (
     "ValueType",
     "Reference",
     "SearchItemResult",
-    "SearchItemResults", 
+    "SearchItemResults",
     "SearchMatch",
     "Sitelink",
     "SitelinkPatchRequest",

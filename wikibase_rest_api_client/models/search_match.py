@@ -9,7 +9,7 @@ T = TypeVar("T", bound="SearchMatch")
 @_attrs_define
 class SearchMatch:
     """Information about what matched in the search
-    
+
     Attributes:
         type (str): The type of match (e.g., "label", "alias")
         language (str): The language of the matched text

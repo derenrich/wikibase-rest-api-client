@@ -14,7 +14,13 @@ from wikibase_rest_api_client.api.descriptions import (
     get_property_descriptions,
 )
 from wikibase_rest_api_client.api.items import get_item
-from wikibase_rest_api_client.api.labels import get_item_label, get_item_labels, get_property_label, get_property_labels, get_item_label_with_language_fallback
+from wikibase_rest_api_client.api.labels import (
+    get_item_label,
+    get_item_labels,
+    get_property_label,
+    get_property_labels,
+    get_item_label_with_language_fallback,
+)
 from wikibase_rest_api_client.api.properties import get_property
 from wikibase_rest_api_client.api.search import search_item
 from wikibase_rest_api_client.api.sitelinks import get_item_site_sitelink, get_item_sitelinks
@@ -110,6 +116,7 @@ def test_get_item_label(client):
         assert type(response.parsed) == str
         parsed = response.parsed
         assert parsed == "human"
+
 
 def test_get_item_label_with_fallback(client):
     with client as client:
@@ -364,11 +371,7 @@ def test_get_property_statements(client):
 def test_search_items(client):
     with client as client:
         response: Response[Any] = search_item.sync_detailed(
-            client=client,
-            q="potato",
-            language="en",
-            limit=10,
-            offset=0
+            client=client, q="potato", language="en", limit=10, offset=0
         )
         assert type(response) == Response
         assert response.status_code == 200

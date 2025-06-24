@@ -9,7 +9,7 @@ T = TypeVar("T", bound="LanguageValue")
 @_attrs_define
 class LanguageValue:
     """A value with a language code
-    
+
     Attributes:
         language (str): The language code (e.g., "en")
         value (str): The text value

@@ -11,7 +11,7 @@ T = TypeVar("T", bound="SearchItemResults")
 @_attrs_define
 class SearchItemResults:
     """Search results containing a list of matching items
-    
+
     Attributes:
         results (List[SearchItemResult]): List of search results
     """
